@@ -1,0 +1,115 @@
+---
+title: "Lab 8"
+author: "Ankita Shankhdhar"
+date: "5 Novembor 2015"
+output: pdf_document
+---
+
+Question 1
+===
+```{r}
+library(plyr)
+setwd("/Users/ankitashankhdhar/Documents/Grad 2nd yr/Comp Stats/Lab 8 ")
+data <- read.csv("bnames.csv")
+name.perc <- ddply(data,.(name),summarize,sum.perc=sum(percent))
+subset.boy <- subset(data, sex=="boy")
+subset.girl <-subset(data, sex=="girl")
+name_boy.perc <- ddply(subset.boy,.(name),summarize,sum.perc=sum(percent))
+name_girl.perc <- ddply(subset.girl,.(name),summarize,sum.perc=sum(percent))
+name_boy.perc <- name_boy.perc[order(- name_boy.perc$sum.perc),]
+name_boy.perc[1:10,]
+name_girl.perc <- name_girl.perc[order(- name_girl.perc$sum.perc),]
+name_girl.perc[1:10,]
+```
+
+The resulting data frame for boys is 3437 by 2 and the resulting data fram for girls is 4018 by 2. 
+
+Question 2
+===
+```{r}
+#function takes in data and then orders by percent
+popular.names<-function(data){
+  yearnew<- data[order(- data$percent),]
+  top<-yearnew$name[1:5]
+  #order them by name and set them in a data frame
+  val <- data.frame(name.1=top[1],name.2=top[2],name.3=top[3],name.4=top[4],name.5=top[5])
+  return(val)
+}
+#test for one year and one sex
+year1880.boy<- subset(data, (year=="1880")& (sex=="boy"))
+popular.names(year1880.boy)
+#gets all the popular names every year for both genders
+popular.all <- ddply(data,.(year,sex),popular.names)
+head(popular.all)
+tail(popular.all)
+```
+
+Question 3
+===
+```{r,eval=FALSE}
+# reads in the csv file and stored in the data
+data <- read.csv("http://people.math.umass.edu/~jstauden/bnames.csv")
+
+# function finds a linear model fit for percent and the year of the data
+lm.fit <- function(temp){
+    fit <- lm(percent~year,data=temp)
+    # returns the fitted coefficients
+    return(data.frame(int=fit$coef[1],slope=fit$coef[2],
+    n=dim(temp)[1]))
+}
+# finds the fit for each distinct name and sex
+inc.dec <- ddply(data,.(name,sex),lm.fit)
+# only takes the sample that was larger than 100
+# Example. There were 129 Aarons as boys
+inc.dec <- subset(inc.dec,n>100)
+# if the slope is within the outer boundaries of the quantiles then keep those names
+inc.dec <- subset(inc.dec,(slope>quantile(slope,p=0.99,na.rm=T))|
+(slope<quantile(slope,p=0.01,na.rm=T)))
+```
+
+Question 4
+===
+```{r}
+smaller.data <- merge(data,inc.dec)
+
+plot.all <- function(ndata,xlims,ylims){
+    fit <-lm(percent~year,data=ndata)
+    plot(ndata$year,ndata$percent,xlab="year",ylab="Percent",main = paste(ndata$name[1]), xlim = xlims, ylim = ylims)
+    abline(fit)
+}
+# have a matrix of 5 rows and 4 columns with all of them together
+pdf("plots.pdf", onefile = T)
+par(mfrow = c(4, 4), cex = 0.5)
+d_ply(smaller.data, .(name), plot.all, xlim = range(smaller.data$year), ylim = range(smaller.data$percent))
+
+# make the plots so we can look at the pdf
+dev.off()
+```
+
+Question 5
+===
+```{r}
+# function that takes in data and orders the data by percent
+# keeps the top 100 of the sorted data and sums ths percent
+# output is the sum of percent
+top100.names<-function(data){
+  year.gender<- data[order(- data$percent),]
+  year.gender<-year.gender[1:100,]
+  sum.perc<-sum(year.gender$percent)
+  return(sum.perc)
+}
+# perform the same on the data that is separated by year and sex
+top.names<-ddply(data,.(year,sex),top100.names)
+# get the boy one
+top.names.boy<-subset(top.names,(sex=="boy"))
+# get the girl one
+top.names.girl<-subset(top.names,(sex=="girl"))
+# plot them 
+plot(top.names$year,top.names$V1,
+     xlab="Year",ylab="Proportion",type="n",
+     main="Proportion of US children with top 100 names")
+lines(top.names.boy$year,top.names.boy$V1,lwd=3)
+lines(top.names.girl$year,top.names.girl$V1,col="red",lwd=3)
+# add the legend
+legend(1880,0.5,c("Boy","Girl"),lty=c(1,1),lwd=c(2.5,2.5),col=c("black","red")) # puts text in the legend
+```

@@ -1,0 +1,132 @@
+---
+title: "Lab 9: Likelihoods"
+author: "Ankita Shankhdhar"
+date: "13 November 2015"
+output: pdf_document
+---
+Part I
+===
+1. Loading the data from the MASS package.
+```{r}
+library(MASS)
+data(cats)
+summary(cats)
+```
+
+Question 1
+===
+Fitting the gamma distribution to the cats’ hearts, using the ``method of moments''
+
+```{r}
+# making the histogram 
+hist(cats$Hwt, xlab="Heart Weight",col="blue",probability=TRUE)
+abline(v=mean(cats$Hwt))
+# function for getting the shape and the scale of the for the gamma distribution
+cat.stats <- function(vec)
+{
+  m<-mean(vec)
+  var <- var(vec)
+  a<-(m^2)/var
+  s<-var/m
+  return(c("Mean"=m,"Variance"=var,"a"=a,"s"=s))
+}
+# now plot the histogram with the gamma distribution given the shape and the scale
+hist(cats$Hwt,main='Cats Body Weight',xlab='Body Weight',probability=TRUE)
+curve(dgamma(x,shape=cat.stats(cats$Hwt)[3],scale=cat.stats(cats$Hwt)[4]),add=TRUE)
+```
+
+Question 2
+===
+The log-likelihood of the shape and scale parameters we just estimated.
+
+```{r}
+# get the log likelihood
+sum(dgamma(cats$Hwt,shape=cat.stats(cats$Hwt)[3],scale=cat.stats(cats$Hwt)[4],log=T))
+```
+
+Question 3
+===
+
+A function, gamma.loglike, which takes in a shape and a scale parameter (in that order), and returns the log-likelihood of the cats’ hearts’ masses
+
+```{r}
+# function that gets the gamma log likelihood given the shape and the scale
+gamma.loglike <- function(shape,scale){
+  gam.out <- function(x)
+  {
+    loglik.gam<- sum(dgamma(x,shape=shape,scale=scale,log=T))
+    return(loglik.gam)
+  }
+  return(gam.out)
+}
+# calling the function on the cats data to make sure we get the same result as question 2
+cats.heart<-gamma.loglike(shape=cat.stats(cats$Hwt)[3],scale=cat.stats(cats$Hwt)[4])
+body(cats.heart)
+loglike.cats.heart<-cats.heart(cats$Hwt)
+paste(loglike.cats.heart)
+```
+
+Question 4
+===
+I the first plot, we vary the shape parameter over the range 1 to 40, while holding the scale parameter fixed at the value you estimated in problem 1. In the second, we vary the scale parameter over the range 0.01 to 1, holding shape fixed at your estimated value.
+
+```{r}
+# set graph environment
+par(mfrow=c(1,2))
+
+# vectorize your results so you can call your function on a range of values
+ll.v <- Vectorize(function(shape,scale,data=cats$Hwt){sum(dgamma(data,shape=shape,scale=scale,log=T))},vectorize.args=c("shape","scale"))
+
+# call the function on the shape ranging from 1 to 40 and plot it
+max(ll.v(shape=seq(from=1,to=40,by=20),scale=cat.stats(cats$Hwt)[4], data=cats$Hwt))
+curve(ll.v(shape=x,scale=cat.stats(cats$Hwt)[4],data=cats$Hwt),from=1,to=40,xlab="shape",ylab="Log Likelihood")
+
+# call the function on the scale ranging from 0.01 to 1 and plot it
+max(ll.v(scale=seq(from=0.01,to=1,by=0.1),shape=cat.stats(cats$Hwt)[3], data=cats$Hwt))
+curve(ll.v(scale=x,shape=cat.stats(cats$Hwt)[3],data=cats$Hwt),from=0.01,to=1,xlab="scale",ylab="Log Likelihood")
+```
+
+Both the functions pear at around -336 to -339. Yes they should be because that is the maximum of the log likelihood given by the method of moments.The value of the shape corresponding to that pear is around 19-20. The value for the scale seems to be around 0.5. 
+
+Question 5
+===
+The function makes a contour plot of the log-likelihood, with the shape parameter on the horizontal axis (range 1 to 40) and the scale parameter on the vertical (range 0.01 to 1). Then I add a point indicating the location of your moment-based estimate from question 1.
+
+```{r}
+# function for the contours that evaluates and expression for the given inputs
+surface.contour <- function(expr,from.x=0,to.x=40,from.y=0,to.y=1,n.x=50,
+  n.y=50,...) {
+  x.seq <- seq(from=from.x,to=to.x,length.out=n.x)
+  y.seq <- seq(from=from.y,to=to.y,length.out=n.y)
+  unevaluated.expression <- substitute(expr)
+  z <- function(x,y) {
+    return(eval(unevaluated.expression,envir=list(x=x,y=y)))
+  }
+  z.values <- outer(X=x.seq,Y=y.seq,FUN=z)
+  z.matrix <- matrix(z.values,nrow=n.x)
+  contour(x=x.seq,y=y.seq,z=z.matrix,...)
+  invisible(list(x=x.seq,y=y.seq,z=z.matrix, func=z))
+}
+# creat the plot
+par(mfrow=c(1,1))
+surface.contour(ll.v(shape=x,scale=y),from.x=1,to.x=40,from.y=0.01,to.y=1,nlevels=200)
+# add the point
+points(cat.stats(cats$Hwt)[3],cat.stats(cats$Hwt)[4])
+```
+
+Question 6
+===
+I can't really tell from the contour from the above part but we can see that if we zoom in closer we might be able to see other contours. Accoring to part 4 we should the maximum to occur when a $\approx$ 19 and the s $\approx$ 0.56. The maximum log likelihood should be around -326. So lets have a closer look. 
+
+Question 7
+===
+Locate the region where the likelihood seems to be largest by changing the ranges over which the shape and scale vary.
+
+```{r}
+par(mfrow=c(1,1))
+surface.contour(ll.v(shape=x,scale=y),from.x=20.21,to.x=20.22,from.y=0.526,to.y=0.5261,nlevels=100)
+```
+
+Question 8
+===
+After looking more closely we that we can reach a higher value which would be around -3.25.5482. I believe we can zooming in more and find a closer value. This would be for a $\approx$ 20.212 and s $\approx$ 0.526

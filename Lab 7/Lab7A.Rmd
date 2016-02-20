@@ -1,0 +1,84 @@
+---
+title: "Lab 7: Debt, the Last Seventy Years"
+author: "Ankita Shankhdhar"
+date: "30 October 2015"
+output: pdf_document
+font: 12pt
+font-family: Garamond
+---
+
+Load Data
+===
+
+```{r}
+setwd("/Users/ankitashankhdhar/Documents/Grad 2nd yr/Comp Stats/Lab 7")
+debt<-read.csv("debt.csv")
+```
+
+Problem 2
+===
+
+```{r}
+avgGDP<-tapply(debt$growth,debt$Country,mean)
+avgGDP<- as.table(avgGDP)
+```
+
+Problem 3
+===
+
+```{r}
+avgGDPyr<-tapply(debt$growth,debt$Year,mean)
+avgGDPyr.new<-as.vector(avgGDPyr)
+plot(as.numeric(rownames(avgGDPyr)),avgGDPyr,ylab="Average GDP per year", xlab="Year")
+```
+
+Problem 4
+===
+
+-**Part a**
+
+```{r}
+cor(debt$growth,debt$ratio)
+```
+
+-**Part b**
+```{r}
+country<-split(debt,debt$Country)
+names(country)
+index_cor<-function(data){
+  x<-data$growth
+  y<-data$ratio
+  correlation.xy<-cor(x,y)
+  return(correlation.xy)
+}
+correlation.country<- sapply(country,index_cor)
+mean(correlation.country)
+hist(correlation.country)
+par(cex=0.5)
+plot(correlation.country)
+axis(1,at=1:20,labels=names(correlation.country))
+```
+
+-**Part c**
+
+```{r}
+year<-split(debt,debt$Year)
+names(year)
+correlation.year<- sapply(year,index_cor)
+mean(correlation.year)
+par(cex=0.35)
+plot(correlation.year)
+axis(1,at=1:64,labels=names(correlation.year))
+```
+
+-**Part d**
+Yes there are a few European countries that seem to be outside the trend. Such as Norway, Italy, Germany and France. Also Japan seems to be a outside the general trend as well. For the years I would say tthat 1946, 1957 and and 1978 seem to outside the general tread. There is more varibaility in the correlation between the year than there is for the countries. 
+
+Problem 5
+===
+```{r}
+par(cex=0.5)
+plot(debt$ratio,debt$growth, main="GDP Growth vs. Debt-GDP Ratio", xlab="Debt Ratio",ylab="GDP Growth")
+```
+
+Yes the shape does match what I expected from problem 4 specially because we can observe the GDP growth decreasing as the debt ratio increases. So they are negatively correlated which can be seen in the graphs in problem 4 as the correlations between the debt and GDP growth are in the negative region. 

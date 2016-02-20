@@ -1,0 +1,13 @@
+---
+title: "Lab 10: Debt, the Last Seventy Years"
+author: "Ankita Shankhdhar"
+date: "23 October 2015"
+output: pdf_document
+font: 12pt
+font-family: Garamond
+---
+
+```{r}
+setwd("/Users/ankitashankhdhar/Documents/Grad 2nd yr/Comp Stats/Lab 7")
+debt<-read.csv("debt.csv")
+```

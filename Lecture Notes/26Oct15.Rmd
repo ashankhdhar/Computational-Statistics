@@ -1,0 +1,147 @@
+lecture13
+========================================================
+author: 
+date: 
+
+split-apply-combine
+========================================================
+
+A common data analysis task has three general steps:
+
+-**Split** whatever data object we have into meaningful chunks
+-**Apply** the function of interest to this division
+-**Combine** the results into a new object.
+
+*apply() and related functions
+========================================================
+
+- apply()
+- tapply() #takes a factor and applies a function to it
+- sapply() #takes a list/vector and applies a function to it
+- split() 
+
+All useful, but output can be hard to control.
+
+Show example
+=============
+```{r,cache=T,tidy=T}
+setwd("/Users/ankitashankhdhar/Documents/Grad 2nd yr/Comp Stats/Lecture Notes")
+data <- read.csv("debt.csv")
+#find the max growth of each country
+max.growths <- tapply(data$growth,data$Country,max) 
+#seems like a vector
+max.growths[1:3]
+#but R says no its not
+is.vector(max.growths)
+```
+Huh?
+
+Example can be cleaned up...
+======
+```{r,cache=T,tidy=T}
+#gets the names of the output which in our case are the countries
+names(max.growths)[1:3]
+#puts this all in a data frame
+data.frame(country=names(max.growths),max.growth=as.vector(max.growths))[1:5,]
+```
+
+plyr library is an easier way
+=======
+- Need to install the package (tools menu item) and load the library
+```{r,cache=T,tidy=T}
+library(plyr)
+```
+- main function syntax is: ?*ply() (? is the input data type and * is the output data type)
+- ? = input data type: d, l, a (data frame, list, or array)
+- * = outut data type: d, l, a, _ (_ = nothing)
+
+Author: Hadley Wickham
+===
+
+Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. http://www.jstatsoft.org/v40/i01/.
+
+
+
+
+
+
+today: d*ply
+=======
+
+syntax:
+output <- d*ply(.data, .(splitvariable), .fun, ...)
+
+Here the **.data** is the dataframe you want to apply it to, **.(splitvariable)** the variable you want to split by and **.fun** is the function you want to apply to it. Here the **.()** are a part of syntax.
+
+- .data – data frame
+- .(...) – arguments to split by
+- .fun – the function to be applied
+- ... – additional arguments to function
+
+
+ddply
+=======
+```{r,cache=T,tidy=T}
+#summarize is required to get it in the format we want (part of the syntax)
+ddply(data,.(Country),summarize,max.growth=max(growth))[1:5,]
+```
+
+plyr library is an easier way
+=======
+```{r,cache=T,tidy=T}
+dlply(data,.(Country),summarize,max.growth=max(growth))
+```
+
+What does this do?
+=======
+```{r,cache=T,tidy=T}
+#not using summarize here
+#we are applying it to the whole data
+ddply(data,.(Country),c("nrow", "ncol"))[1:5,]
+```
+
+What does this do?
+=======
+
+```{r,cache=T,tidy=T}
+#looking at the growth to debt ratio
+cor.by.country <- function(one.c.data)
+  cor(one.c.data$growth,one.c.data$ratio)
+# input data frame = data
+# split variable = Country
+# the function you want to apply = cor.by.country
+ddply(data,.(Country),"cor.by.country")[1:5,]
+```
+
+example with no output
+=======
+```{r,cache=T,tidy=T,echo=T}
+plot.by.country <- function(one.c.data,xlims,ylims)
+{
+    plot(one.c.data$ratio,one.c.data$growth,ylab="Growth",xlab="Ratio",
+         main=paste(one.c.data$Country[1]),type="n",xlim=xlims,ylim=ylims,
+         sub=paste("Correlation=",round(cor(one.c.data$growth,one.c.data$ratio),2)))
+  text(one.c.data$ratio,one.c.data$growth,one.c.data$Year,cex=.5)
+}
+```
+
+Try it on one country's data
+=====
+```{r,fig.width=10,fig.height=8,tidy=T}
+par(cex=2)
+plot.by.country(data[data$Country=="Italy",],xlims=range(data$ratio),ylims=range(data$growth))
+```
+
+Make a book of pdfs
+====
+```{r,cache=T,tidy=T}
+pdf("~/plots.pdf",onefile=T)
+d_ply(data,.(Country),plot.by.country,xlims=range(data$ratio),ylims=range(data$growth))
+
+#have a matrix of 5 rows and 4 columns with all of them together
+par(mfrow=c(5,4),cex=.5)
+d_ply(data,.(Country),plot.by.country,xlims=range(data$ratio),ylims=range(data$growth))
+#make the plots so we can look at the pdf
+dev.off()
+```
+

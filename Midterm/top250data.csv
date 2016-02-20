@@ -1,0 +1,251 @@
+"title","year","content.rating","user.rating","num.raters","genre","budget","opening","gross"
+"The Shawshank Redemption",1994,"R",9.3,1539241,"Crime Drama",2.5e+07,727327,28341469
+"The Godfather",1972,"R",9.2,1054531,"Crime Drama",6e+06,302393,134966411
+"The Godfather: Part II",1974,"R",9.1,713561,"Crime Drama",1.3e+07,244000,57300000
+"The Dark Knight",2008,"PG-13",9,1514909,"Action Crime Drama",1.85e+08,158411483,534858444
+"12 Angry Men",1957,"Not Rated",8.9,398490,"Crime Drama",350000,NA,NA
+"Schindler's List",1993,"R",8.9,783144,"Biography Drama History",2.2e+07,656636,96045248
+"Pulp Fiction",1994,"R",8.9,1199796,"Crime Drama",8e+06,9311882,107928762
+"The Good, the Bad and the Ugly",1966,"Not Rated",8.9,459994,"Western",1200000,10584,25100000
+"The Lord of the Rings: The Return of the King",2003,"PG-13",8.9,1103894,"Adventure Fantasy",9.4e+07,72629713,377845905
+"Fight Club",1999,"R",8.9,1213879,"Drama",6.3e+07,11035485,37030102
+"The Lord of the Rings: The Fellowship of the Ring",2001,"PG-13",8.8,1128359,"Adventure Fantasy",9.3e+07,47211490,315544750
+"Star Wars: Episode V - The Empire Strikes Back",1980,"PG",8.8,720832,"Action Adventure Fantasy Sci-Fi",1.8e+07,10840307,290475067
+"Forrest Gump",1994,"PG-13",8.8,1115131,"Drama Romance",5.5e+07,2.4e+07,557683
+"Inception",2010,"PG-13",8.8,1313664,"Action Mystery Sci-Fi Thriller",1.6e+08,62785337,292576195
+"One Flew Over the Cuckoo's Nest",1975,"R",8.7,622314,"Drama",4400000,NA,1.12e+08
+"The Lord of the Rings: The Two Towers",2002,"PG-13",8.7,995274,"Adventure Fantasy",9.4e+07,727645,342551365
+"Goodfellas",1990,"R",8.7,662144,"Biography Crime Drama",2.5e+07,6368901,46836394
+"The Matrix",1999,"R",8.7,1104250,"Action Sci-Fi",6.3e+07,27788331,171479930
+"Star Wars",1977,"PG",8.7,790711,"Action Adventure Fantasy Sci-Fi",1.1e+07,35906661,460935665
+"Seven Samurai",1954,"Unrated",8.7,211016,"Drama",2e+06,21830,269061
+"City of God",2002,"R",8.7,488443,"Crime Drama",3300000,114442,7563397
+"Se7en",1995,"R",8.6,923094,"Drama Mystery Thriller",3.3e+07,NA,100125643
+"The Silence of the Lambs",1991,"R",8.6,792703,"Crime Drama Thriller",1.9e+07,13766814,130742922
+"The Usual Suspects",1995,"R",8.6,674631,"Crime Drama Thriller",6e+06,645363,1120000
+"It's a Wonderful Life",1946,"Approved",8.6,248370,"Drama Family Fantasy",3180000,NA,NA
+"Life Is Beautiful",1997,"PG-13",8.6,371498,"Comedy Drama Romance",NA,63934,57598247
+"Léon: The Professional",1994,"R",8.6,654594,"Crime Drama Thriller",NA,5306558,19251002
+"Once Upon a Time in the West",1968,"PG-13",8.6,197231,"Western",5e+06,NA,5321508
+"Interstellar",2014,"PG-13",8.7,746133,"Adventure Drama Sci-Fi",1.65e+08,47510360,188020017
+"Saving Private Ryan",1998,"R",8.6,793178,"Action Drama War",7e+07,30576104,216540909
+"Spirited Away",2001,"PG",8.6,369693,"Animation Adventure Family Fantasy",NA,449839,10049886
+"American History X",1998,"R",8.6,713602,"Crime Drama",7500000,1340166,6712241
+"Casablanca",1942,"PG",8.6,358381,"Drama Romance War",950000,181494,1661267
+"City Lights",1931,"Passed",8.6,95808,"Comedy Drama Romance",1500000,NA,19181
+"Psycho",1960,"R",8.6,382618,"Horror Mystery Thriller",806947,NA,3.2e+07
+"Raiders of the Lost Ark",1981,"PG",8.6,600834,"Action Adventure",1.8e+07,1673731,3115115
+"Rear Window",1954,"Approved",8.5,287799,"Mystery Thriller",1e+06,15172,1559601
+"The Intouchables",2011,"R",8.6,434604,"Biography Comedy Drama",NA,103507,13179837
+"Modern Times",1936,"G",8.6,126152,"Comedy Drama",1500000,NA,163245
+"The Green Mile",1999,"R",8.5,696384,"Crime Drama Fantasy Mystery",6e+07,18017152,136801374
+"Terminator 2: Judgment Day",1991,"R",8.5,677293,"Action Sci-Fi",1.02e+08,31765506,198116802
+"Whiplash",2014,"R",8.5,296823,"Drama Music",3300000,NA,13092000
+"The Pianist",2002,"R",8.5,446127,"Biography Drama War",3.5e+07,2456117,32572577
+"The Departed",2006,"R",8.5,786639,"Crime Drama Thriller",9e+07,26887467,132384315
+"Memento",2000,"R",8.5,772013,"Mystery Thriller",9e+06,235488,25544867
+"Gladiator",2000,"R",8.5,888422,"Action Drama",1.03e+08,34819017,187705427
+"Back to the Future",1985,"PG",8.5,646360,"Adventure Comedy Sci-Fi",1.9e+07,11332134,197902294
+"Apocalypse Now",1979,"R",8.5,413747,"Drama War",31500000,96992,4626290
+"Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",1964,"PG",8.5,315886,"Comedy War",1800000,11751,9440272
+"Sunset Blvd.",1950,"Not Rated",8.5,127216,"Drama Film-Noir",1752000,NA,NA
+"The Prestige",2006,"PG-13",8.5,756692,"Drama Mystery Thriller",4e+07,14801808,53089891
+"Alien",1979,"R",8.5,511019,"Horror Sci-Fi",1.1e+07,1287560,80930630
+"The Lion King",1994,"G",8.5,569306,"Animation Adventure Drama Family Musical",4.5e+07,40888194,422783777
+"The Great Dictator",1940,"Approved",8.5,121661,"Comedy Drama War",2e+06,NA,5e+06
+"The Lives of Others",2006,"R",8.5,235693,"Drama Thriller",2e+06,213589,11286112
+"Cinema Paradiso",1988,"R",8.5,136146,"Drama",NA,16552,12397210
+"The Shining",1980,"R",8.4,548753,"Horror",1.9e+07,622337,44017374
+"Django Unchained",2012,"R",8.5,834281,"Western",1e+08,30688000,162804648
+"Paths of Glory",1957,"Approved",8.5,109027,"Drama War",935000,NA,NA
+"The Dark Knight Rises",2012,"PG-13",8.5,1027665,"Action Thriller",2.5e+08,160887295,448139099
+"WALL·E",2008,"G",8.4,639859,"Animation Adventure Family Sci-Fi",1.8e+08,63087526,223808164
+"American Beauty",1999,"R",8.4,753190,"Drama Romance",1.5e+07,861531,130058047
+"Grave of the Fireflies",1988,"Unrated",8.5,120465,"Animation Drama War",NA,NA,NA
+"Inside Out",2015,"PG",8.5,141074,"Animation Adventure Comedy Drama Family Fantasy",1.75e+08,90440272,351525709
+"Aliens",1986,"R",8.4,447406,"Action Horror Sci-Fi",18500000,10052042,77632096
+"Citizen Kane",1941,"Approved",8.4,274904,"Drama Mystery",686033,216239,1140769
+"North by Northwest",1959,"Approved",8.4,203308,"Adventure Mystery Thriller",3101000,NA,13275000
+"Oldeuboi",2003,"R",8.4,320419,"Drama Mystery Thriller",3e+06,885382,1956671
+"Princess Mononoke",1997,"PG-13",8.4,198366,"Animation Adventure Fantasy",NA,144446,2375308
+"Vertigo",1958,"Approved",8.4,224685,"Mystery Romance Thriller",2479000,10783,1.5e+07
+"Das Boot",1981,"R",8.4,154739,"Adventure Drama War",1.4e+07,68369,11487676
+"Star Wars: Episode VI - Return of the Jedi",1983,"PG",8.4,574419,"Action Adventure Fantasy Sci-Fi",32500000,16293531,309125409
+"M",1931,"Not Rated",8.4,90486,"Crime Drama Thriller",NA,6123,28877
+"Once Upon a Time in America",1984,"R",8.4,200435,"Crime Drama",3e+07,2412014,5321508
+"Amélie",2001,"R",8.4,486679,"Comedy Romance",NA,136470,33201661
+"Witness for the Prosecution",1957,"Approved",8.4,55226,"Drama Mystery Thriller",3e+06,NA,NA
+"Reservoir Dogs",1992,"R",8.4,596292,"Crime Drama",1200000,147839,2832029
+"Braveheart",1995,"R",8.4,671365,"Biography Drama History War",7.2e+07,9938276,75609945
+"Toy Story 3",2010,"G",8.4,486081,"Animation Adventure Comedy Family Fantasy",2e+08,110307189,415004880
+"A Clockwork Orange",1971,"X",8.4,504606,"Crime Drama Sci-Fi",2200000,NA,26589355
+"Taxi Driver",1976,"R",8.4,457436,"Crime Drama",1300000,NA,28262574
+"Requiem for a Dream",2000,"R",8.4,524417,"Drama",4500000,64770,3609278
+"Double Indemnity",1944,"Passed",8.4,88966,"Crime Drama Film-Noir Thriller",927262,NA,NA
+"To Kill a Mockingbird",1962,"Not Rated",8.4,193970,"Drama",2e+06,NA,13129846
+"Lawrence of Arabia",1962,"PG",8.4,174930,"Adventure Biography Drama History War",1.5e+07,20846,342481
+"Eternal Sunshine of the Spotless Mind",2004,"R",8.4,605299,"Drama Romance Sci-Fi",2e+07,8175198,34126138
+"Full Metal Jacket",1987,"R",8.3,437835,"Drama War",1.7e+07,2217307,46357676
+"Amadeus",1984,"R",8.3,246325,"Biography Drama History Music",1.8e+07,86764,366401
+"The Sting",1973,"PG",8.3,159802,"Comedy Crime Drama",5500000,NA,1.56e+08
+"Bicycle Thieves",1948,"Not Rated",8.4,84489,"Drama",NA,25010,332930
+"Singin' in the Rain",1952,"Approved",8.4,136294,"Comedy Musical Romance",2540800,NA,1729345
+"2001: A Space Odyssey",1968,"G",8.3,384555,"Mystery Sci-Fi",10500000,NA,239621
+"Snatch.",2000,"R",8.3,550261,"Comedy Crime",NA,8005163,30093107
+"Monty Python and the Holy Grail",1975,"PG",8.3,351212,"Adventure Comedy Fantasy",NA,45487,1229197
+"The Kid",1921,"Not Rated",8.4,58212,"Comedy Drama Family",250000,NA,5450000
+"For a Few Dollars More",1965,"Approved",8.3,139975,"Western",750000,NA,1.5e+07
+"Rashômon",1950,"Unrated",8.3,92924,"Crime Drama",NA,NA,NA
+"L.A. Confidential",1997,"R",8.3,384568,"Crime Drama Mystery Thriller",3.5e+07,5211198,64604977
+"Toy Story",1995,"G",8.3,553854,"Animation Adventure Comedy Family Fantasy",3e+07,12491789,30144903
+"Andaz Apna Apna",1994,"PG",8.7,25382,"Comedy Family Romance",NA,NA,NA
+"Inglourious Basterds",2009,"R",8.3,781129,"Adventure Drama War",7.5e+07,38054676,120540719
+"The Apartment",1960,"Approved",8.3,98764,"Comedy Drama Romance",3e+06,NA,18600000
+"All About Eve",1950,"Approved",8.4,76016,"Drama",NA,10177,10177
+"The Treasure of the Sierra Madre",1948,"Not Rated",8.3,72658,"Action Adventure Drama Western",3e+06,NA,4307000
+"Indiana Jones and the Last Crusade",1989,"PG-13",8.3,466507,"Action Adventure",4.8e+07,29400000,197171806
+"Jodaeiye Nader az Simin",2011,"PG-13",8.4,137690,"Drama",5e+05,59481,7098492
+"Metropolis",1927,"Not Rated",8.3,101439,"Drama Sci-Fi",NA,19978,26435
+"Yojimbo",1961,"Unrated",8.3,67178,"Drama",NA,NA,NA
+"Scarface",1983,"R",8.3,488859,"Crime Drama",2.5e+07,242821,45598982
+"Batman Begins",2005,"PG-13",8.3,876849,"Action Adventure",1.5e+08,48745440,206852432
+"The Third Man",1949,"Not Rated",8.3,104365,"Film-Noir Mystery Thriller",NA,13576,407198
+"Some Like It Hot",1959,"Not Rated",8.3,160521,"Comedy",2883848,NA,2.5e+07
+"Unforgiven",1992,"R",8.3,254497,"Western",14400000,15018007,74681912
+"3 Idiots",2009,"PG-13",8.5,175403,"Comedy Drama",NA,1645502,6532908
+"Up",2009,"PG",8.3,587437,"Animation Adventure Comedy Family",1.75e+08,68108790,293004164
+"Raging Bull",1980,"R",8.3,215907,"Biography Drama Sport",1.8e+07,13568,23383987
+"Downfall",2004,"R",8.3,228921,"Biography Drama War",NA,18195,5509040
+"Jagten",2012,"R",8.3,143701,"Drama",3800000,43045,610968
+"Chinatown",1974,"R",8.3,197934,"Crime Drama Mystery Thriller",6e+06,NA,29200000
+"The Great Escape",1963,"Approved",8.3,151392,"Adventure Drama History War",4e+06,NA,NA
+"Die Hard",1988,"R",8.3,542503,"Action Thriller",2.8e+07,601851,80707729
+"Good Will Hunting",1997,"R",8.3,544839,"Drama",1e+07,10261471,138339411
+"Heat",1995,"R",8.3,397339,"Action Crime Drama Thriller",6e+07,NA,67436000
+"On the Waterfront",1954,"Not Rated",8.3,91559,"Crime Drama",910000,NA,9600000
+"Pan's Labyrinth",2006,"R",8.2,427387,"Drama Fantasy War",NA,779427,37623143
+"Mr. Smith Goes to Washington",1939,"Not Rated",8.3,71114,"Drama",1500000,NA,9e+06
+"The Bridge on the River Kwai",1957,"Approved",8.2,135918,"Adventure Drama War",3e+06,NA,5668000
+"The Martian",2015,"PG-13",8.3,93781,"Adventure Drama Sci-Fi",1.09e+08,5.5e+07,NA
+"My Neighbor Totoro",1988,"G",8.3,148739,"Animation Family Fantasy",NA,NA,NA
+"Mad Max: Fury Road",2015,"R",8.3,350074,"Action Adventure Sci-Fi Thriller",1.5e+08,45428128,153612032
+"Ikiru",1952,"Not Rated",8.3,37817,"Drama",NA,7590,55240
+"Ran",1985,"R",8.3,70913,"Action Drama War",11500000,10245,116872
+"The Gold Rush",1925,"Not Rated",8.3,60563,"Adventure Comedy Drama",923000,NA,5450000
+"The Seventh Seal",1957,"Not Rated",8.3,101651,"Drama Fantasy",150000,NA,NA
+"Blade Runner",1982,"R",8.2,425006,"Sci-Fi Thriller",2.8e+07,89150,32868943
+"The Secret in Their Eyes",2009,"R",8.2,113739,"Drama Mystery Thriller",2e+06,167866,6390014
+"Wild Strawberries",1957,"Unrated",8.3,57465,"Drama",NA,NA,NA
+"Lock, Stock and Two Smoking Barrels",1998,"R",8.2,382691,"Comedy Crime",NA,143321,3650677
+"The General",1926,"Unrated",8.3,47818,"Action Adventure Comedy Romance War",750000,NA,NA
+"The Elephant Man",1980,"PG",8.2,149127,"Biography Drama",5e+06,NA,26010864
+"Casino",1995,"R",8.2,302922,"Biography Crime Drama",5.2e+07,9946480,42438300
+"Howl's Moving Castle",2004,"PG",8.2,189341,"Animation Adventure Family Fantasy Romance",NA,427987,4710455
+"Warrior",2011,"PG-13",8.2,298388,"Drama Sport",2.5e+07,5242107,13657115
+"The Wolf of Wall Street",2013,"R",8.2,656623,"Biography Comedy Crime Drama",1e+08,18361578,116900694
+"Gran Torino",2008,"R",8.2,515430,"Drama",3.3e+07,271720,148095302
+"V for Vendetta",2005,"R",8.2,720091,"Action Drama Thriller",5.4e+07,25642640,70511035
+"The Big Lebowski",1998,"R",8.2,487199,"Comedy Crime",1.5e+07,5533844,17439163
+"Judgment at Nuremberg",1961,"Not Rated",8.3,39078,"Drama History War",3e+06,NA,6e+06
+"Rebecca",1940,"Not Rated",8.2,80195,"Film-Noir Mystery Thriller",1288000,NA,NA
+"A Beautiful Mind",2001,"PG-13",8.2,544405,"Biography Drama",6e+07,2501096,170708996
+"The Deer Hunter",1978,"R",8.2,214397,"Drama War",1.5e+07,NA,5e+07
+"How to Train Your Dragon",2010,"PG",8.2,431009,"Animation Adventure Family Fantasy",1.65e+08,43732319,217581231
+"Cool Hand Luke",1967,"PG",8.2,110683,"Crime Drama",NA,NA,NA
+"Fargo",1996,"R",8.2,407692,"Crime Drama Thriller",7e+06,730265,24611975
+"Gone with the Wind",1939,"G",8.2,197414,"Drama Romance War",3977000,1192593,198655278
+"Trainspotting",1996,"R",8.2,430276,"Drama",3500000,262000,16501785
+"Dial M for Murder",1954,"PG",8.2,95256,"Crime Thriller",1400000,12562,12562
+"It Happened One Night",1934,"Unrated",8.2,58442,"Comedy Romance",325000,NA,NA
+"Into the Wild",2007,"R",8.2,383883,"Adventure Biography Drama",1.5e+07,212440,18352454
+"The Sixth Sense",1999,"PG-13",8.2,647318,"Drama Mystery Thriller",4e+07,26681262,293501675
+"Gone Girl",2014,"R",8.2,475509,"Drama Mystery Thriller",6.1e+07,37513109,167735396
+"Finding Nemo",2003,"G",8.2,612074,"Animation Adventure Comedy Family",9.4e+07,16687773,41123892
+"Rush",2013,"R",8.2,270921,"Action Biography Drama Sport",3.8e+07,187289,26491919
+"Incendies",2010,"R",8.2,68363,"Drama Mystery War",6800000,50679,6857096
+"The Maltese Falcon",1941,"Not Rated",8.2,103969,"Crime Drama Film-Noir Mystery",375000,NA,NA
+"Mary and Max",2009,"Not Rated",8.2,106399,"Animation Comedy Drama",NA,NA,NA
+"No Country for Old Men",2007,"R",8.1,555355,"Crime Drama Thriller",2.5e+07,1226333,74273505
+"The Thing",1982,"R",8.2,234074,"Horror Sci-Fi",1.5e+07,3107897,19629760
+"Kill Bill: Vol. 1",2003,"R",8.1,666036,"Action",3e+07,22089322,70099045
+"Hotel Rwanda",2004,"PG-13",8.2,243044,"Drama History War",17500000,100091,23472900
+"The Wages of Fear",1953,"Not Rated",8.2,31925,"Adventure Drama Thriller",NA,NA,NA
+"Life of Brian",1979,"R",8.1,248853,"Comedy",4e+06,26376,646124
+"Platoon",1986,"R",8.1,268722,"Drama War",6e+06,241080,138530565
+"Butch Cassidy and the Sundance Kid",1969,"M",8.1,138133,"Biography Crime Western",6e+06,NA,102308889
+"There Will Be Blood",2007,"R",8.1,340136,"Drama",2.5e+07,302845,40218903
+"Network",1976,"R",8.1,94024,"Drama",3800000,NA,23689877
+"Touch of Evil",1958,"PG-13",8.2,66869,"Crime Film-Noir Thriller",829000,70725,2237659
+"The 400 Blows",1959,"Not Rated",8.2,63491,"Crime Drama",NA,NA,NA
+"Stand by Me",1986,"R",8.1,248717,"Adventure Drama",8e+06,242795,51914208
+"Persona",1966,"Not Rated",8.2,54391,"Drama",NA,NA,NA
+"12 Years a Slave",2013,"R",8.1,376242,"Biography Drama History",2e+07,923715,56667870
+"The Princess Bride",1987,"PG",8.2,270382,"Adventure Comedy Family Fantasy Romance",1.6e+07,206243,24650738
+"Amores Perros",2000,"R",8.1,159506,"Drama Thriller",2e+06,61047,5383834
+"The Grand Budapest Hotel",2014,"R",8.1,393863,"Adventure Comedy Drama",NA,811166,59034599
+"In the Name of the Father",1993,"R",8.1,98192,"Biography Drama History",1.3e+07,NA,25096862
+"Annie Hall",1977,"PG",8.1,174695,"Comedy Romance",4e+06,NA,38251425
+"Million Dollar Baby",2004,"PG-13",8.1,437294,"Drama Sport",3e+07,179953,100422786
+"Ben-Hur",1959,"G",8.1,145374,"Adventure Drama History War",15900000,NA,74700000
+"The Grapes of Wrath",1940,"Not Rated",8.1,57276,"Drama",NA,NA,NA
+"Hachi: A Dog's Tale",2009,"G",8.2,128885,"Drama Family",1.6e+07,NA,NA
+"Shutter Island",2010,"R",8.1,694710,"Mystery Thriller",8e+07,41062440,128012934
+"Nausicaä of the Valley of the Wind",1984,"PG",8.1,84886,"Animation Adventure Fantasy Sci-Fi",NA,NA,NA
+"Diabolique",1955,"Unrated",8.2,38041,"Drama Horror Thriller",NA,NA,NA
+"Stalker",1979,"Not Rated",8.2,61164,"Drama Sci-Fi",NA,NA,NA
+"Sin City",2005,"R",8.1,610669,"Crime Thriller",4e+07,29120273,74103820
+"Relatos salvajes",2014,"R",8.2,57078,"Comedy Drama Thriller",3300000,85100,3079012
+"Gandhi",1982,"PG",8.1,156107,"Biography Drama History",2.2e+07,131153,52767889
+"The Best Years of Our Lives",1946,"Passed",8.2,36888,"Drama Romance War",2100000,NA,NA
+"The Wizard of Oz",1939,"Passed",8.1,266112,"Adventure Family Fantasy Musical",2777000,3093998,22202612
+"The Bourne Ultimatum",2007,"PG-13",8.1,445051,"Action Thriller",1.1e+08,69283690,227471070
+"Donnie Darko",2001,"R",8.1,534783,"Drama Sci-Fi",4500000,24728,727883
+"Jurassic Park",1993,"PG-13",8.1,540038,"Adventure Sci-Fi Thriller",6.3e+07,18620145,402348347
+"8½",1963,"Not Rated",8.1,71809,"Drama",NA,11947,50690
+"Strangers on a Train",1951,"Approved",8.1,87389,"Crime Film-Noir Thriller",1200000,NA,NA
+"Before Sunrise",1995,"R",8.1,163986,"Drama Romance",2500000,1423537,5381891
+"Twelve Monkeys",1995,"R",8.1,425895,"Mystery Sci-Fi Thriller",2.9e+07,14200000,57141459
+"The Avengers",2012,"PG-13",8.1,889571,"Action Sci-Fi Thriller",2.2e+08,207438708,623357910
+"The Terminator",1984,"R",8.1,543497,"Action Sci-Fi",6400000,4020663,38371200
+"Infernal Affairs",2002,"R",8.1,84458,"Crime Mystery Thriller",NA,25680,169659
+"Jaws",1975,"PG",8.1,374666,"Adventure Drama Thriller",8e+06,7061513,26860259
+"Memories of Murder",2003,"Unrated",8.1,57047,"Crime Drama Mystery Thriller",NA,4487,14131
+"Udaan",2010,"Not Rated",8.4,25852,"Drama",NA,2715,7461
+"Groundhog Day",1993,"PG",8.1,395195,"Comedy Fantasy Romance",14600000,14652108,70835374
+"The Battle of Algiers",1966,"Not Rated",8.2,33337,"Drama History War",NA,64870,815345
+"Monsters, Inc.",2001,"G",8.1,519353,"Animation Adventure Comedy Family Fantasy",1.15e+08,5040000,289907418
+"The Truman Show",1998,"PG",8.1,600957,"Drama",6e+07,31542121,125603360
+"Harry Potter and the Deathly Hallows: Part 2",2011,"PG-13",8.1,482338,"Adventure Drama Fantasy Mystery",1.25e+08,169189427,381011219
+"Throne of Blood",1957,"Unrated",8.2,27243,"Drama",NA,NA,NA
+"Guardians of the Galaxy",2014,"PG-13",8.1,560958,"Action Adventure Sci-Fi",1.7e+08,94320883,333176600
+"Fanny and Alexander",1982,"R",8.1,39096,"Drama",NA,36365,4971340
+"Barry Lyndon",1975,"PG",8.1,92227,"Adventure Drama History War",1.1e+07,NA,2e+07
+"Rocky",1976,"PG",8.1,328876,"Drama Sport",960000,NA,117235247
+"Dog Day Afternoon",1975,"R",8.1,168441,"Crime Drama Romance",NA,NA,5e+07
+"Yip Man",2008,"R",8.1,143560,"Action Biography Drama Sport",NA,NA,NA
+"High Noon",1952,"PG",8.1,73729,"Drama Western",750000,NA,8e+06
+"The Imitation Game",2014,"PG-13",8.1,357462,"Biography Drama Thriller War",1.4e+07,7932292,91121452
+"The King's Speech",2010,"R",8.1,449927,"Biography Drama",1.5e+07,355450,138795342
+"La Haine",1995,"Not Rated",8.1,93347,"Crime Drama",NA,NA,309811
+"A Fistful of Dollars",1964,"R",8.1,129266,"Action Drama Western",2e+05,NA,3500000
+"Pirates of the Caribbean: The Curse of the Black Pearl",2003,"PG-13",8.1,738633,"Action Adventure Fantasy",1.4e+08,46630690,305413918
+"Castle in the Sky",1986,"PG",8.1,87165,"Animation Adventure Family Fantasy Romance",NA,NA,NA
+"Notorious",1946,"Approved",8.1,68292,"Drama Film-Noir Romance Thriller",2e+06,NA,8e+06
+"Prisoners",2013,"R",8.1,328787,"Crime Drama Mystery Thriller",4.6e+07,20817053,61002302
+"The Help",2011,"PG-13",8.1,290318,"Drama",2.5e+07,26044590,169708112
+"Roman Holiday",1953,"Not Rated",8.1,90173,"Comedy Romance",1500000,NA,5e+06
+"Who's Afraid of Virginia Woolf?",1966,"TV-MA",8.1,51535,"Drama Romance",7500000,NA,2.8e+07
+"Gangs of Wasseypur",2012,NA,8.4,37344,"Action Crime Drama Thriller",NA,NA,NA
+"Spring, Summer, Fall, Winter... and Spring",2003,"R",8.1,57186,"Drama",NA,42561,2380788
+"The Night of the Hunter",1955,"Approved",8.1,59537,"Crime Drama Film-Noir Thriller",795000,NA,NA
+"Papillon",1973,"R",8.1,90583,"Biography Crime Drama",1.2e+07,NA,53267000
+"Beauty and the Beast",1991,"G",8,276847,"Animation Family Fantasy Musical Romance",2.5e+07,17754905,47611331
+"Anatomy of a Murder",1959,"Unrated",8.1,42215,"Crime Drama Mystery Thriller",NA,NA,1.1e+07
+"La Strada",1954,"Not Rated",8.1,43588,"Drama",NA,NA,NA
+"Before Sunset",2004,"R",8.1,152165,"Drama Romance",2700000,311194,5792822
+"Underground",1995,"Not Rated",8.1,40770,"Comedy Drama War",1.4e+07,NA,NA
+"The Hustler",1961,"Unrated",8.1,59350,"Drama Sport",2e+06,NA,NA
+"The Graduate",1967,"Approved",8,198856,"Comedy Drama Romance",3e+06,NA,43153
+"Solaris",1972,"PG",8.1,48777,"Drama Mystery Sci-Fi",NA,NA,NA
+"Le Samouraï",1967,"PG",8.1,29031,"Crime Drama Mystery Thriller",NA,39481,39481
+"La Dolce Vita",1960,"Not Rated",8.1,44808,"Comedy Drama",NA,NA,19516000

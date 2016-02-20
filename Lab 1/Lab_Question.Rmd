@@ -1,0 +1,123 @@
+---
+title: "Lab 1"
+output: html_document
+---
+Part I
+
+Question 1:
+
+```{r,echo=TRUE}
+exp.draws.1=rexp(200)
+mean(exp.draws.1)
+sd(exp.draws.1)
+```
+
+Question 2:
+```{r, echo=TRUE}
+exp.draws.0.1=rexp(200,rate=0.1)
+mean(exp.draws.0.1)
+sd(exp.draws.0.1)
+```
+
+```{r, echo=TRUE}
+exp.draws.0.5=rexp(200,rate=0.5)
+mean(exp.draws.0.5)
+sd(exp.draws.0.5)
+```
+
+```{r, echo=TRUE}
+exp.draws.5=rexp(200,rate=5)
+mean(exp.draws.5)
+sd(exp.draws.5)
+```
+
+```{r, echo=TRUE}
+exp.draws.10=rexp(200,rate=10)
+mean(exp.draws.10)
+sd(exp.draws.10)
+```
+
+Question 3:
+
+a:
+```{r,echo=TRUE}
+hist(exp.draws.1)
+
+```
+
+b:
+```{r,echo=TRUE}
+plot(exp.draws.1)
+```
+
+c:
+```{r,echo=TRUE}
+plot(exp.draws.1,exp.draws.0.5)
+```
+
+Question 4:
+```{r,echo=TRUE}
+mat <- cbind(exp.draws.0.1,exp.draws.0.5,exp.draws.1,exp.draws.5,exp.draws.10)
+meanvec <- apply(mat,2,mean)
+```
+
+a:
+```{r,echo=TRUE}
+rates<-c(0.1,0.5,1,5,10)
+plot(rates,meanvec)
+```
+
+b:
+```{r,echo=TRUE}
+sdvec <- apply(mat,2,sd)
+plot(rates,sdvec)
+```
+
+c:
+```{r}
+plot(meanvec,sdvec)
+```
+
+Part II
+
+Question 5:
+
+a:
+```{r}
+big.exp.draws.1 <- rexp(1100000)
+mean(big.exp.draws.1)
+sd(big.exp.draws.1)
+```
+
+b:
+```{r}
+hist(big.exp.draws.1)
+```
+
+This looks like the cdf of the standard exponential.
+
+c:
+```{r}
+big1<-big.exp.draws.1[big.exp.draws.1>1]
+mean(big1)
+```
+
+d:
+```{r}
+big.exp.draws.1.mat<-matrix(big.exp.draws.1,nrow=1100)
+bigvec<- as.vector(big.exp.draws.1.mat)
+bighist<-hist(bigvec)
+```
+
+e:
+```{r}
+mean.371<-mean(big.exp.draws.1.mat[,371])
+```
+
+f:
+```{r}
+mean.all <- colMeans(big.exp.draws.1.mat)
+hist(mean.all)
+```
+
+This is showing the distribution of the means. Since we have a large enough sample we say the distribution of our sample mean will look normal using the central limit theorem.

@@ -1,0 +1,132 @@
+---
+title: "Lab 1"
+author: Ankita Shankhdhar
+date: Due 21st September 2015
+output: pdf_document
+---
+
+Part I
+
+Question 1:
+
+I am generating 200 random values using a the standard exponential distribution. So the rate is set to 1.
+```{r,echo=TRUE}
+exp.draws.1=rexp(200)
+mean(exp.draws.1)
+sd(exp.draws.1)
+```
+
+Question 2:
+
+Generating 200 random values with rate 0.1:
+```{r, echo=TRUE}
+exp.draws.0.1=rexp(200,rate=0.1)
+mean(exp.draws.0.1)
+sd(exp.draws.0.1)
+```
+
+Generating 200 random values with rate 0.5:
+```{r, echo=TRUE}
+exp.draws.0.5=rexp(200,rate=0.5)
+mean(exp.draws.0.5)
+sd(exp.draws.0.5)
+```
+
+Generating 200 random values with rate 5:
+```{r, echo=TRUE}
+exp.draws.5=rexp(200,rate=5)
+mean(exp.draws.5)
+sd(exp.draws.5)
+```
+
+Generating 200 random values with rate 10:
+```{r, echo=TRUE}
+exp.draws.10=rexp(200,rate=10)
+mean(exp.draws.10)
+sd(exp.draws.10)
+```
+
+Question 3:
+
+a: Plots the histogram of the standard exponential
+```{r,echo=TRUE}
+hist(exp.draws.1, xlab="Standard Exponential Draws", main="Histogramof Standard Exponential Draws")
+```
+
+b: Creates a scatterplot of the standard exponential
+```{r,echo=TRUE}
+plot(exp.draws.1,ylab="Standard Exponential Draws", main="Scatter plot of Standard Exp. Draws")
+```
+
+c: Creates a a scatterplot of the standard exponential against the exponential with rate = 0.5
+```{r,echo=TRUE}
+plot(exp.draws.1,exp.draws.0.5,xlab="Standard Exponential Draws", ylab="Expoenential Draws with rate=0.5",main="Histogram of Standard Exponential Draws")
+```
+
+Question 4:
+
+Creates a matrix which containes the values of all the distributions and then finds the column means.
+```{r,echo=TRUE}
+mat <- cbind(exp.draws.0.1,exp.draws.0.5,exp.draws.1,exp.draws.5,exp.draws.10)
+meanvec <- apply(mat,2,mean)
+```
+
+a: Plots the the vector of means with respect to their rates. The plot seems to have an exponential decay.
+```{r,echo=TRUE}
+rates<-c(0.1,0.5,1,5,10)
+plot(rates,meanvec, xlab="Rates",ylab="Means",main="Plot of Means vs. Rates")
+```
+
+b: Plots the the vector of standard deviations with respect to their rates. The plot seems to have an exponential decay.
+```{r,echo=TRUE}
+sdvec <- apply(mat,2,sd)
+plot(rates,sdvec,xlab="Rates",ylab="Standard Deviations",main="Plot of Standard Deviations vs. Rates")
+```
+
+c: Plots the the standard deviations versus the means. We see a postive correlation between the two. So as the means increase, so does the standard deviation. 
+```{r}
+plot(meanvec,sdvec,xlab="Means",ylab="Standard Deviations",main="Plot of Standard Deviations vs. Means")
+```
+
+Part II
+
+Question 5:
+
+a: Creates a huge matrix of random standard exponential values and calculates their mean and standard deviations
+```{r}
+big.exp.draws.1 <- rexp(1100000)
+mean(big.exp.draws.1)
+sd(big.exp.draws.1)
+```
+
+b: Creates a histogram of those values
+```{r}
+hist(big.exp.draws.1, xlab="Large Standard Exp. Draws", main="Histogram of large standard Exp. Draws")
+```
+
+This looks like the pdf of the standard exponential. The function given is the cdf. So if we take the integral of the function we should get something that resembels the histogram. 
+
+c: Finds the mean of only the values greater than 1
+```{r}
+big1<-big.exp.draws.1[big.exp.draws.1>1]
+mean(big1)
+```
+
+d: Primarily, creates a matrix out all the standard exponential draws. We do not have to specify the ncol because R will automatically decide that according to the amount og data we have. Then we save everything as a vector so we can pass it to the hist() function. The data stays the same. 
+```{r}
+big.exp.draws.1.mat<-matrix(big.exp.draws.1,nrow=1100)
+bighist<-hist(big.exp.draws.1.mat, xlab="Large Standard Exp. Draws", main="Histogram of the matrix of large standard Exp. Draws")
+```
+
+e: We calculate the mean of the 371th column
+```{r}
+mean(big.exp.draws.1.mat[,371])
+```
+
+f:
+```{r}
+mean.all <- colMeans(big.exp.draws.1.mat)
+hist(mean.all, xlab="Mean of the columns", main="Histogram of the means of the columns of big matrix")
+```
+
+This is showing the distribution of the means. Since we have a large enough sample we say the distribution of our sample mean will look normal using the central limit theorem.

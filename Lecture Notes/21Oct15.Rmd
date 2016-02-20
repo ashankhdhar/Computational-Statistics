@@ -1,0 +1,148 @@
+---
+output: pdf_document
+---
+Lecture 12
+========================================================
+author: John S
+date: October 21, 2015
+
+More on *apply family
+========================================================
+
+- Continued...
+- Often things that can be done in a loop can often be done with an "apply type" function.
+- Sometimes this is faster.
+- It can be easier to program and read.
+- **split** the data - **apply** the function - **combine** the results
+- how's midterm going?
+
+
+Today
+=====
+- Extended example with strike data
+
+
+
+Strike Data 
+========================================================
+
+From Bruce Western, Sociology, Harvard.
+
+- Data frame of 8 columns: country, year, days on strike per 1000 workers, unemployment, inflation, left-wing share of gov’t, centralization of unions, union density
+- 625 observations from 18 countries, 1951–1985
+- Since 18 × 35 = 630 > 625, some years missing from some countries
+
+Strike Data 
+========================================================
+
+```{r, tidy=T, cache=T}
+setwd("/Users/ankitashankhdhar/Documents/Grad 2nd yr/Comp Stats/Lecture Notes")
+strike <- read.csv("strikes.csv")
+names(strike)
+strike[1,]
+```
+
+Question
+==========
+Does having a friendlier government make labor action more or less likely?
+
+More specific:  Is there a relationship between a country's ruling party alignment (left vs. right) and the volume of strikes?
+
+One way to address: linear regression by country.
+
+Covariate: left.parliament
+
+Response: strike.volume
+
+
+
+
+Why is it important to do it by country?
+========
+Because if we look at the data as a a whole for all countries then simpson's paradox. (Look at notes)
+
+```{r,fig.width=14,tidy=T}
+par(cex=2)
+plot(strike$left.parliament,strike$strike.volume,
+     xlab="% Left Parliament",ylab="Strike Volume")
+```
+
+First step: look at all the data!
+========
+
+```{r,echo=F,fig.width=14,tidy=T}
+par(cex=0.5)
+plot(strike$left.parliament[strike$country=="Australia"],strike$strike.volume[strike$country=="Australia"],
+     xlab="% Left Parliament",ylab="Strike Volume",main="Australia")
+```
+Use par(mfrow=c(6,3)) to make for all 18 countries.
+
+Could use a for loop:
+=====
+```{r,tidy=T,cache=T}
+# function takes unqiue values from a vector and returns them (just returns the distinct countries)
+coefs <- data.frame(country=unique(strike$country),int=NA,slope=NA)
+  #loop through rows of data
+  for (i in 1:dim(coefs)[1]){
+    # select strikes for countriy at i
+    temp <- strike[strike$country==coefs$country[i],]
+    # fits the model y~x (lm for linear models)
+    coefs[i,2:3] <- lm(strike.volume~left.parliament,data=temp)$coef
+  }  
+head(coefs)
+```
+
+Another way: sapply()
+===
+
+
+- sapply(x,fun,...)
+- write a function that takes one country's data, fits model, and return coefficients.
+```{r,cache=T,tidy=T}
+fit.for.one.country <- function(one.country.data){
+  coef <- 
+    lm(strike.volume~left.parliament,data=one.country.data)$coef
+  return(coef)
+}
+```
+
+sapply
+=====
+Make a list that has datasets for each country in each element
+```{r,cache=T,tidy=T}
+datasets <- split(strike,strike$country)
+names(datasets)
+```
+
+sapply
+=====
+Make a list that has datasets for each country in each element
+```{r,cache=T,tidy=T}
+fits <- sapply(datasets,fit.for.one.country)
+fits[1:2,1:3]
+```
+
+plot results: not too conlusive...
+===
+```{r,echo=F,fig.width=14}
+par(cex=0.5)
+plot(fits[2,],xaxt="n",xlab="",ylab="Regression coefficient", 
+     main="Countrywise Labor Activity By Left-Wing Score")
+axis(side=1,at=seq(along=colnames(fits)),labels=colnames(fits),
+las=2,cex.axis=0.5)
+abline(h=0,col="grey")
+```
+
+Other ways:
+=====
+* by() (Please see book.)
+* lapply(): same as sapply, but it gives a list of outcomes
+
+Summary: 
+==========
+* **split** - **apply**- **combine** can be done with a loop
+* *apply family is another option
+  + sometimes much more efficient
+  + easier to code and read (after you learn it!)
+  + but, output can have a format that is hard to control
+* Next: plyr library will address that problem

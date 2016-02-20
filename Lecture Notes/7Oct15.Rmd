@@ -1,0 +1,222 @@
+<style>
+  .reveal pre {font-size: 12px;}
+</style>
+
+Reading and Writing Data
+========================================================
+author:
+date:
+transition: none
+font-family: 'Garamond'
+  
+In Previous Episodes
+==========  
+- Seen functions to load data in passing (e.g. readLines())
+- Learned about string manipulation and regular expressions
+
+Agenda
+==========  
+- Getting data into and out of the system when it's already in R format
+- Import and export when the data is already very structured and machine-readable
+- Dealing with less structured data
+- Web scraping
+
+Reading Data from R
+==========  
+- You can load and save R objects
++ R has its own format for this, which is shared across operating systems
++ It's an open, documented format if you really want to pry into it
+- `save(thing, file="name")` saves `thing` in a file called `name` (conventional extension: `rda` or `Rda` or `Rdata`)
+- `load("name")` loads the object or objects stored in the file called `name`, _with their old names_
+
+Example
+=====
+```{r,echo=TRUE}
+gmp <- read.table("gmp.dat")
+gmp$pop <- round(gmp$gmp/gmp$pcgmp)
+save(gmp,file="gmp.Rda")
+rm(gmp)
+exists("gmp")
+load(file="gmp.Rda")
+colnames(gmp)
+```
+
+==========  
+- We can load or save more than one object at once; this is how RStudio will load your whole workspace when you're starting, and offer to save it when you're done
+- Many packages come with saved data objects; there's the convenience function `data()` to load them
+```{r}
+# methods of applied statistics
+data(cats,package="MASS")
+summary(cats)
+```
+
+Non-R Data Tables
+==========  
+- Tables full of data, just not in the R file format
+- Main function: `read.table()`
++ Presumes space-separated fields, one line per row
++ Main argument is the file name or URL
++ Returns a dataframe
++ Lots of options for things like field separator, column names, forcing or guessing column types, skipping lines at the start of the file...
+- `read.csv()` is a short-cut to set the options for reading comma-separated value (CSV) files
++ Spreadsheets will usually read and write CSV
+
+Example: Reading data can be tricky
+==========  
+```{r,cache=TRUE}
+# because it has a character in it, it will turn it all into a character
+data <- read.csv("huh.txt")
+data
+#can not do this because of character
+data$speed/data$distance
+```
+huh
+
+Example: Reading data can be tricky
+==========  
+```{r,cache=TRUE}
+is.numeric(data$speed)
+is.numeric(data$distance)
+#distance is a factor variable
+#order of factor
+data$distance
+#use levels(data$distance) shows that there exists a space
+```
+
+Example: Reading data can be tricky
+==========  
+```{r,cache=TRUE}
+# taking a factor and turning it to a numerics
+as.numeric(data$distance)
+# make it a character first and then turn them into numbers
+data$distance <- as.numeric(as.character(data$distance))
+# warning: NA are introduced by the conversion
+data$distance
+# but now you can divide speed by distance
+data$speed/data$distance
+```
+
+Writing Dataframes
+==========  
+- Counterpart functions `write.table()`, `write.csv()` write a dataframe into a file
+- Drawback: takes a lot more disk space than what you get from `load` or `save`
+- Advantage: can communicate with other programs
+
+Less Friendly Data Formats
+==========  
+- The `foreign` package on CRAN has tools for reading data files from lots of non-R statistical software
+- Spreadsheets are special
+
+Spreadsheets Considered Harmful
+==========  
+- Spreadsheets look like they should be dataframes
+- Real spreadsheets are full of ugly irregularities
++ Values or formulas?
++ Headers, footers, side-comments, notes
++ Columns change meaning half-way down
++ Whole separate programming languages apparently intended to mostly to spread malware
+
+Spreadsheets, what to do
+==========  
+- Save the spreadsheet as a CSV; `read.csv()`
+- Save the spreadsheet as a CSV; edit in a text editor; `read.csv()`
+- Use `read.xls()` from the `gdata` package
++ Tries very hard to work like `read.csv()`, can take a URL or filename
++ Can skip down to the first line that matches some pattern, select different sheets, etc.
++ You may still need to do a lot of tidying up after
+
+
+Semi-Structured Files, Odd Formats
+==========  
+- Sometimes non-tabular arrangement
+- Generally, write function to read in one (or a few) lines and split it into some nicer format
++ Regular expressions can help
++ Best to write functions to do this
+- Example: Actigraph accelerometer
+
+Actigraph accelerometer example
+==========
+First few lines of dataset:
+```
+Created By ActiGraph GT3X+ ActiLife v6.7.0 Firmware v2.4.0 
+date format M/d/yyyy at 80 Hz  Filter Normal ---
+Start Time 09:15:00
+Start Date 3/5/2012
+Epoch Period (hh:mm:ss) 00:00:00
+Download Time 10:33:16
+Download Date 3/5/2012
+Current Memory Address: 0
+Current Battery Voltage: 4.22     Mode = 12
+--------------------------------------------------
+0.924,0.023,-0.32
+0.927,0.026,-0.32
+0.93,0.026,-0.32
+```
+
+
+Reader function
+==========
+
+```{r}
+# function that reads in file
+# input the path to file
+read.actigraph.GT3X <- function(file.name.and.path)
+{
+  # read top 10 lines
+  # read header and start time
+  data <- readLines(paste(file.name.and.path),n=10)
+  # read in the third/fourth element and split it and keep the part you want
+  start.time <- data[3]
+  start.time <- (strsplit(start.time,split=" ")[[1]][3])
+  start.date <- data[4]
+  start.date <- (strsplit(start.date,split=" ")[[1]][3])
+  start.time <- as.POSIXlt(strptime(paste(start.date,start.time),
+                                    "%m/%d/%Y %H:%M:%S"))
+
+  # read acceleration data and add timestamps
+	data <- read.csv(file.name.and.path,skip=10,header=F)
+  n <- dim(data)[1] # number of rows in data
+  	full.data <- 
+  	  data.frame(time = start.time + (0:(n-1))/80,data)
+  	
+  return(full.data)
+}
+```
+
+How'd I figure out how to do this?
+
+
+
+Building data from the web
+==========  
+- Can do this with regular expressions like in lab
+- Easier way is to use a package (e.g. XML)
+- Example: Ironman data
+
+Example: Ironman data
+===========
+- Want to build a dataset from the results tables lie at
+http://www.ironman.com/triathlon/events/americas/ironman/mont-tremblant/results.aspx?p=1&race=monttremblant&rd=20150816&agegroup=Pro&sex=M&ps=20#axzz3BcHJd6dJ
+- XML is a package that has tools to find tables on web pages
+
+Example: Ironman data
+==========
+```{r}
+library(XML)
+junk <- "http://www.ironman.com/triathlon/events/americas/ironman/mont-tremblant/results.aspx?p=1&race=monttremblant&rd=20150816&agegroup=Pro&sex=M&ps=20#axzz3BcHJd6dJ"
+# uses the htmlParse
+junk.doc <- htmlParse(junk)
+# finds all the tables in the data set
+tab <- readHTMLTable(junk.doc)$eventResults
+head(tab[,-c(2:5,10)])
+```
+
+I want all the data!
+===
+(See R console...)
+
+Summary
+==========  
+- Loading and saving R objects is very easy
+- Reading and writing dataframes is pretty easy
+- Extracting data from unstructured sources is possible

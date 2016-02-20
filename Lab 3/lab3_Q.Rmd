@@ -1,0 +1,21 @@
+---
+title: 'Lab 3: scraping - making data from the web: scraping'
+author: John S
+date: "25 September 2015"
+output: html_document
+---
+  
+  
+Using regular expressions to extract data from text; text manipulation
+
+Please submit a hard copy of your answers (including commands).
+
+The file `rich.html` on the class website is a listing of the 100 richest people in America, according to _Forbes_ magazine.  We will use the file to practice extracting information from Web pages.
+
+1. Use the `readLines` command to load the file into a character vector called `richhtml`.  How many lines does it contain? What is the total number of characters in the file?
+
+2. Open the file in a text editor (_not_ as a web-page).  Find the entries for Bill Gates and for Stanley Kroenke.  Give the text of the lines from the file that has their names and their net worths.
+
+3. Use regular expressions to extract the data from the web page and build a data frame that has 2 columns: name and net worth in billions of dollars. The name
+column should be characters and the net worth column should be numeric. There should be 100 rows. The work we did in class should help you get
+started on this.

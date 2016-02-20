@@ -1,0 +1,209 @@
+---
+title: "Lab2"
+author: Ankita Shankhdhar
+date: Due 25 September 2015
+output: pdf_document
+---
+```{r}
+library(MASS)
+data(Cars93)
+View(Cars93)
+```
+
+Part 1: Data Frames
+
+Question 1:
+
+Cars93 has 93 rows and and 27 columns or in other words it has 93 observcations and 27 variables. I could only tell the number of variables (columns) using the summary function. I could not tell the number of observations (rows). I used the dim function to evaluate the rows and the columns
+
+```{r}
+summary(Cars93)
+dim(Cars93)
+```
+
+Question 2:
+
+The max price of a car with a rear-wheel drive train is:
+
+```{r}
+rear <-Cars93[Cars93$DriveTrain=="Rear",]
+mean(rear$Price)
+```
+
+Question 3:
+
+The minimum horsepower of all cars with capacity for 7 passengers is:
+```{r}
+cap.7 <-Cars93[Cars93$Passengers=="7",]
+min(cap.7$Horsepower)
+```
+
+The minimum horsepower of all cars with capacity of at least 6 passengers is:
+```{r}
+cap.6 <-Cars93[Cars93$Passengers>="6",]
+min(cap.6$Horsepower)
+```
+
+Question 4:
+
+To compute the distance travellable we need miles per gallon that it can travel on the highway and the fuel tank capacity of the car itself. Looking at these two we know that the miles it can travel in a gallon and multiplying that with the amount og fuel it can hold in gallons would give you the amount it can travel overall. 
+```{r}
+distance.travellable <- (Cars93$MPG.highway)*(Cars93$Fuel.tank.capacity)
+max(distance.travellable)
+min(distance.travellable)
+median(distance.travellable)
+```
+
+Part II - Reproducibility and Functions
+
+```{r}
+factory.function <- function (cars.output=1, trucks.output=1) {
+  factory <- matrix(c(40,1,60,3),nrow=2,
+    dimnames=list(c("labor","steel"),c("cars","trucks")))
+  available <- c(1600,70); names(available) <- rownames(factory)
+  slack <- c(8,1); names(slack) <- rownames(factory)
+  output <- c(cars.output, trucks.output); names(output) <- colnames(factory)
+
+  passes <- 0 # How many times have we  been around the loop?
+  repeat {
+     passes <- passes + 1
+     needed <- factory %*% output # What do we need for that output level?
+     # If we're not using too much, and are within the slack, we're done
+     if (all(needed <= available) &&
+         all((available - needed) <= slack)) {
+       break()
+     }
+     # If we're using too much of everything, cut back by 10%
+     if (all(needed > available)) {
+       output <- output * 0.9
+       next()
+     }
+     # If we're using too little of everything, increase by 10%
+     if (all(needed < available)) {
+       output <- output * 1.1
+       next()
+     }
+     # If we're using too much of some resources but not others, randomly
+     # tweak the plan by up to 10%
+      # runif == Random number, UNIFormly distributed, not "run if"
+     output <- output * (1+runif(length(output),min=-0.1,max=0.1))
+  }
+
+  return(output)
+}
+```
+
+Question 5:
+
+If we want to optimize a function then starting with any initial guess we should be able to converge. 
+
+```{r}
+factory.function()
+```
+
+Question:6
+
+These values are around the same for cars and trucks. The output value of cars is approximately 10 and the output value of trucks is approximately 20.
+
+```{r}
+factory.function(0.005,0.005)
+factory.function(0.05,0.05)
+factory.function(0.5,0.5)
+factory.function(5,5)
+factory.function(50,50)
+```
+
+
+Question 7:
+
+```{r}
+factory.function2 <- function (cars.output=1, trucks.output=1) {
+  factory <- matrix(c(40,1,60,3),nrow=2,
+    dimnames=list(c("labor","steel"),c("cars","trucks")))
+  available <- c(1600,70); names(available) <- rownames(factory)
+  slack <- c(8,1); names(slack) <- rownames(factory)
+  output <- c(cars.output, trucks.output); names(output) <- colnames(factory)
+
+  passes <- 0 # How many times have we  been around the loop?
+  repeat {
+     passes <- passes + 1
+     needed <- factory %*% output # What do we need for that output level?
+     # If we're not using too much, and are within the slack, we're done
+     if (all(needed <= available) &&
+         all((available - needed) <= slack)) {
+       break()
+     }
+     # If we're using too much of everything, cut back by 10%
+     if (all(needed > available)) {
+       output <- output * 0.9
+       next()
+     }
+     # If we're using too little of everything, increase by 10%
+     if (all(needed < available)) {
+       output <- output * 1.1
+       next()
+     }
+     # If we're using too much of some resources but not others, randomly
+     # tweak the plan by up to 10%
+      # runif == Random number, UNIFormly distributed, not "run if"
+     output <- output * (1+runif(length(output),min=-0.1,max=0.1))
+  }
+
+  return(c(output,"Passes"=passes))
+}
+```
+
+```{r}
+factory.function2()
+factory.function2(0.005,0.005)
+factory.function2(0.05,0.05)
+factory.function2(0.5,0.5)
+factory.function2(5,5)
+factory.function2(50,50)
+```
+
+We notice that the number of passes changes everytime. The number of iterations changes everytime due to the randomness.
+
+Question 8:
+
+```{r}
+
+factory.function3 <- function (cars.output=1, trucks.output=1) {
+  factory <- matrix(c(40,1,60,3),nrow=2,
+    dimnames=list(c("labor","steel"),c("cars","trucks")))
+  available <- c(1600,70); names(available) <- rownames(factory)
+  slack <- c(8,1); names(slack) <- rownames(factory)
+  output <- c(cars.output, trucks.output); names(output) <- colnames(factory)
+
+  passes <- 0 # How many times have we  been around the loop?
+  repeat {
+     passes <- passes + 1
+     needed <- factory %*% output # What do we need for that output level?
+     # If we're not using too much, and are within the slack, we're done
+     if (all(needed <= available) &&
+         all((available - needed) <= slack)) {
+       break()
+     }
+     # If we're using too much of everything, cut back by 10%
+     if (all(needed > available)) {
+       output <- output * 0.9
+       next()
+     }
+     # If we're using too little of everything, increase by 10%
+     if (all(needed < available)) {
+       output <- output * 1.1
+       next()
+     }
+     # If we're using too much of some resources but not others, randomly
+     # tweak the plan by up to 10%
+      # runif == Random number, UNIFormly distributed, not "run if"
+     output <- output * (1+runif(length(output),min=-0.1,max=0.1))
+  }
+
+  return(c(output,"Passes"=passes,"Needed"=needed,"Slack"=slack,"Available"=available))
+}
+
+factory.function3(30,20)
+```
+
+We clearly want more than what we get from our resources. We want to make 30 cars and 20 trucks. So this means that our plan is not within our budget and so not within our slack.

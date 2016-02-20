@@ -1,0 +1,231 @@
+<style>
+  .reveal pre {font-size: 12px;}
+</style>
+
+Introduction To Regular Expressions
+========================================================
+author: John S
+date: 21 September 2015
+font-family: 'Garamond'
+transition: none
+
+Agenda
+===
+- functions that work on strings
+- regular expressions
+
+
+Functions that work on strings
+====
+
+nchar() finds length(s) of string(s)
+
+
+```{r}
+x <- c("This","is","text")
+nchar(x)
+```
+
+Functions that work on strings
+====
+
+paste() strings together
+
+```{r}
+paste("This","is","text",sep=" - ")
+x <- c("This","is","text")
+paste(x,collapse=" - ")
+```
+
+Functions that work on strings
+====
+substring() extracts elements between start and stop
+
+```{r}
+y <- substring("This",2,3)
+paste(y,"!",sep="")
+```
+
+Functions that search on strings
+====
+
+grep(pattern,x) finds indices where text has first argument
+
+
+```{r}
+x <- c("This","is","text")
+inds <- grep("i",x)
+inds
+x[inds]
+```
+
+Functions that search on strings
+====
+
+strsplit(x,split=pattern) splits x using delimeter
+
+```{r}
+x <- c("This - is - text.","So - is - this.")
+y <- strsplit(x,split=" - ")
+y
+#turns the list into a vector
+unlist(y)
+```
+
+Functions that search on strings
+====
+
+regexpr(pattern,x) finds first place pattern comes in x
+
+```{r}
+x <- c("This is text.","So is this.")
+y <- regexpr("i",x)
+y
+c(y[1],y[2])
+```
+
+Functions that search on strings
+====
+
+gregexpr(pattern,x) finds all places a pattern comes in x
+
+```{r}
+x <- c("This is text.","So is this.")
+y <- gregexpr("i",x)
+y
+```
+
+Functions that search on strings
+====
+
+gsub(to find,to replace,x) replaces first argument with second.
+
+```{r}
+x <- c("20,123","21,113")
+y <- gsub(",","",x)
+y
+as.numeric(y)
+```
+
+Regular expressions
+====
+
+Regular expressions are very flexible 'wildcards' that can be used in searches.
+
+There are whole books about regular expressions, so this is an introduction! 
+
+Can be used as "pattern" argument in previous functions.
+
+Regular expressions
+======
+characters or numbers inside [ ] are treated as or
+
+```{r}
+# look for a or A in vector
+grep("[aA]",c("ab","Ab","BB","BAa"))
+```
+[.] is any character and [0-9] is any number
+```{r}
+# look for the indices that contain integers in the vector
+grep("[0-9]",c("ab","Ab","BB","BAa"))
+```
+
+Regular expressions
+======
+Some characters (.,$,\,etc) need to be preceeded by \\
+
+```{r}
+# look for any character in vector
+grep(".",c("a.a","aa"))
+# search fro special character is preceeded by \\
+grep("\\.",c("a.a","aa"))
+grep("\\$",c("$100","not paid"))
+```
+
+Regular expressions
+=================
+There are many special characters and there are quantifiers
+
+\\s means space
+
+\\s+[Aa] means at least 1 space followed by an A or a
+
+```{r}
+grep("\\s",c("a a","aa"))
+#search for atleast one space followed by either A or a
+grep("\\s+[Aa]",c("a A","aa"," a"))
+```
+
+
+Regular expressions
+=================
+
+Example: rich.html is a web page.
+
+Want to use R to extract data from web page.
+
+Want to make a data frame with names in one colums and net worth (in $Billions) in another.
+
+This is lab on Fri. Next few pages help get you started. 
+
+
+Regular expressions
+====
+```{r}
+forbes <- readLines("~/rich.html")
+length(forbes)
+forbes[540:544]
+```
+
+Regular expressions
+====
+
+Text inside square brackets is like "or"
+
+```{r}
+#finds the gates or Gates in forbes
+forbes <- readLines("~/rich.html")
+inds <- grep("[gG]ates",forbes)
+forbes[inds]
+```
+
+Regular expressions
+====
+
+
+```{r}
+forbes <- readLines("~/rich.html")
+inds <- grep("\\$",forbes)
+head(forbes[inds])
+tail(forbes[inds])
+```
+
+
+=======
+```{r}
+forbes <- readLines("~/rich.html")
+#finding the dollar sign 
+dollar.lines <- forbes[grep("\\$",forbes)]
+dollar.lines <- dollar.lines[grep("\\sB",dollar.lines)]
+tail(dollar.lines)
+tail(forbes[grep("\\$[0-9,]+\\sB",forbes)])
+```
+
+=======
+```{r}
+# find all the names in the index right before the net income index
+forbes <- readLines("~/rich.html")
+names.lines <- forbes[grep("\\$[0-9,]+\\sB",forbes)-1]
+head(names.lines)
+tail(names.lines)
+```
+
+=====
+```{r}
+forbes <- readLines("~/rich.html")
+names.lines <- forbes[grep("\\$[0-9,]+\\sB",forbes)-1]
+#use a string split by finding <h3> in your vector and then split it 
+#unlisting the stringsplit will give you a vector
+head(unlist(strsplit(names.lines,split="<h3>"))[seq(from=2,to=200,by=2)])
+#use gsub to replace everything that appears after the name with a blank 
+```

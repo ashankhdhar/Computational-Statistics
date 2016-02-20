@@ -1,0 +1,74 @@
+---
+title: "Lab 3"
+author: "Ankita Shankhdhar"
+date: "Due 2 October 2015"
+output: pdf_document
+---
+
+
+Loading the html file
+===
+
+```{r}
+richhtml <- readLines("http://people.math.umass.edu/~jstauden/rich.html/rich.html")
+```
+
+Problem 1
+===
+The html contains:
+```{r}
+cat("Lines:", length(richhtml)) #lines
+cat("Charaters",sum(nchar(richhtml))) # chanracters
+```
+
+Problem 2
+===
+
+* ***Bill Gates***
+```{r}
+bill <- grep("[gG]ates",richhtml)
+name.bill <- richhtml[grep("[Bb]ill Gates",richhtml)]
+worth.bill<-richhtml[grep("Bill Gates",richhtml)+1]
+cat("The text from the lines that has his name:",name.bill)
+cat("The text from the lines that has his net worth:",worth.bill)
+```
+
+* ***Stanley Kroenke***
+```{r}
+stanley <- grep("[Kk]roenke",richhtml)
+name.stanley <- richhtml[grep("[Ss]tanley Kroenke",richhtml)]
+worth.stanley<-richhtml[grep("Stanley Kroenke",richhtml)+1]
+cat("The text from the lines that has his name:",name.stanley)
+cat("The text from the lines that has his net worth:",worth.stanley)
+```
+
+Problem 3
+===
+To get the list of names
+```{r}
+names.all <- richhtml[grep("\\$[0-9,]+\\sB",richhtml)-1]
+names.all<-unlist(strsplit(names.all,split="<h3>"))[seq(from=2,to=200,by=2)]
+names.all<-gsub("</h3></a></td>","",names.all)
+```
+
+To get the net worth
+```{r}
+# Get all the lines of the net worths
+worth.all <- richhtml[grep("\\$[0-9,]+\\sB",richhtml)]
+# only need every 2 line to keep those
+worth.all <- unlist(strsplit(worth.all,split="\\$"))[seq(from=2,to=200,by=2)]
+# get rid of everything before and after it
+worth.all <- gsub(" B</td","", worth.all)
+worth.all <- gsub(">","", worth.all)
+# set it as a numeric
+worth.all <- as.numeric(gsub(",",".", worth.all))
+```
+
+The ***stringAsFactors=False*** tells the dataframe not to convert string to factors. The dataframe then keeps the string vector as a character. 
+
+```{r}
+names.worth <- data.frame(names.all,worth.all,stringsAsFactors=FALSE)
+sapply(names.worth, class)
+names(names.worth)<-c("Name","Net Worth (Billions $)")
+names.worth
+```

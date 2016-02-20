@@ -1,0 +1,138 @@
+---
+title: "Final Project - Yelp"
+author: "Ankita Shankhdhar"
+date: "Due December 2015"
+output: pdf_document
+---
+
+Globally defining the text not to fall off the page. 
+===
+
+```{r,eval=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60))
+```
+
+Part 1
+===
+
+**Loading the html file**
+
+```{r tidy=T,tidy.opts=list(width.cutoff=60)}
+rest.listing <- function(city,state){
+  rest.nameall<-c()
+  rest.rating<-c()
+  rest.price<-c()
+  rest.user<-c()
+  rest.category<-c()
+  
+address <-paste("http://www.yelp.com/search?find_desc=Restaurants&find_loc=",tolower(city),"+",tolower(state),"&start=",0,sep="")
+main.pg<-readLines(address)
+pg.num<-main.pg[grep("page-of-pages",main.pg)+1]
+pg2.num<-as.numeric(strsplit(pg.num,split="of ")[[1]][2])
+
+for (i in 0:1){
+  address <-paste("http://www.yelp.com/search?find_desc=Restaurants&find_loc=",tolower(city),"+",tolower(state),"&start=",i*10,sep="")
+  
+    main.pg<-readLines(address)
+  
+  # finding the name
+  rest.name <- main.pg[grep("biz-name",main.pg)][-1]
+  rest.name1 <- unlist(strsplit(rest.name,split="<span >"))[seq(from=2,to=20,by=2)]
+  rest.name2 <- as.character(unlist(strsplit(rest.name1,split="</span>"))[seq(from=1,to=20,by=2)])
+  rest.nameall<-c(rest.nameall,rest.name2)
+  
+    # finding the rating
+  look.for<-grep("biz-name",main.pg)
+  rest.rate4<-c()
+  for (j in 2:11){
+    rest.rate<-main.pg[look.for[j]+9]
+    rest.rate1<-grep("star rating",rest.rate)  
+  if (length(rest.rate1)>0)
+    {
+      rest.rate2<-unlist(strsplit(rest.rate,split="title=\""))[[2]][1]
+      rest.rate3<-as.numeric(unlist(strsplit(rest.rate2,split=" star"))[[1]][1])
+  	} 
+  else { rest.rate3 <- NA }
+     rest.rate4[j-1]<-rest.rate3
+  } 
+  rest.rating<-c(rest.rating,rest.rate4)
+  
+    # finding the price range
+    rest.pr4<-c()
+    for (j in 2:11){
+      rest.pr<-main.pg[look.for[j]+25]
+      rest.pr1 <-grep("price-range",rest.pr)
+      if (length(rest.pr1)>0)
+      {
+        rest.pr2 <-unlist(strsplit(rest.pr,split="price-range\">"))[2]
+        rest.pr3<-unlist(strsplit(rest.pr2,split="</span>"))[1]
+      }
+      else{ rest.pr3 <-NA}
+      rest.pr4[j-1]<-rest.pr3
+    }
+    rest.price<-c(rest.price,rest.pr4)
+  
+  # finding the User Rating
+  user.rating4<-c()
+  for (j in 2:11){
+    user.rating<-main.pg[look.for[j]+16]
+    user.rating1<-grep("reviews",user.rating)  
+    if (length(user.rating1)>0)
+    {
+        user.rating2<-gsub(" ","",user.rating)
+        user.rating3<-gsub("reviews","",user.rating2)
+    }
+    else{ user.rating3<-NA}
+    user.rating4[j-1]<-user.rating3
+  }
+  rest.user <- c(rest.user,user.rating4)
+  
+    # finding category
+  category5<-c()
+    for (j in 2:11){
+        category4 <- c()
+        index<-1
+        look.for <- grep("category-str-list",main.pg)
+        category<-main.pg[look.for[j]+index]
+        category1<-grep("cflt",category)
+        if (length(category1)>0){
+            category2<-unlist(strsplit(category,split="\">"))[2]
+            category3<-gsub("</a>","",category2)
+            
+            while (length(grep(",",category3))>0){
+                category4<-paste(category4,category3)
+                index<-index+1
+                category<-main.pg[look.for[j]+index]
+                category1<-grep("cflt",category)
+                category2<-unlist(strsplit(category,split="\">"))[2]
+                category3<-gsub("</a>","",category2)  
+            }
+            category4<-paste(category4,category3)
+        }
+        else {
+            category4<-NA
+        }
+        category5[j-1]<-category4
+    }
+  rest.category<-c(rest.category,category5)
+}
+
+rest.nameall<-gsub("&amp;","&",rest.nameall)
+
+rest.url<- gsub("[^[:alnum:][:space:]&]","",tolower(rest.nameall))
+rest.url2 <-gsub("\\&","and",rest.url)
+rest.url3<- gsub(" ","-",rest.url2)
+rest.url4<- paste("http://www.yelp.com/biz/",rest.url3,"-amherst",sep="")
+
+  return(list(Name=rest.nameall,Rating=rest.rating,PriceRange=rest.price, UserRating=rest.user,FoodCategory=rest.category,MoreInfo=rest.url4))
+
+}
+```
+
+
+Testing for Amherst
+```{r}
+restaurants<-rest.listing("Amherst","MA")
+```
+

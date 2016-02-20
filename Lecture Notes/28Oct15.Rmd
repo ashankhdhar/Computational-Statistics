@@ -1,0 +1,207 @@
+lecture14
+========================================================
+author: 
+date: 
+
+more about plyr
+========================================================
+
+In honor of world series, I'll start witha baseball example.
+```{r,echo=F,cache=T}
+library(plyr)
+# dataset of careers of baseball players
+# each row is player name identifier, year, team, and game information
+data(baseball)
+```
+```{r,tidy=T,cache=T}
+head(baseball)[,c(1,2,4,6:9)]
+```
+
+========
+```{r,tidy=T,cache=T}
+tail(baseball)[,c(1,2,4,6:9)]
+dim(baseball)
+```
+
+2 functions: "transform" & "summarize"
+=========
+
+transform
+
+```{r,tidy=T,cache=T}
+# the trasnform function will take in a dataframe
+# everything after the dataframe will be added as a column to the dataframe
+standings <- data.frame(name=c("Mets","Royals"),W=c(90,95),L=c(72,67))
+transform(standings,win.perc=round(W/(W+L),2),games=W+L)
+```
+
+2 functions: "transform" & "summarize"
+=========
+
+summarize
+
+```{r,tidy=T,cache=T}
+# summarise does similar things as transform
+# But instead it creates a new data frame with just the new columns
+standings <- data.frame(name=c("Mets","Royals"),W=c(90,95),L=c(72,67))
+summarise(standings,win.perc=round(W/(W+L),2),games=W+L)
+```
+
+Goal: plot year as pro versus mean home run per at bat
+====
+
+1. Add column to baseball dataset with year as pro for each player, each year.
+2. Calculate mean HR per at bat for possible values of year as pro
+3. Make CI around that mean too
+
+When doing something complicated, I usually write simpler functions first.
+
+Add a column to baseball with year in league
+========================================================
+
+Get data for one player and try it
+
+```{r,cache=T}
+carl.y <- subset(baseball,id=="yastrca01")
+head(carl.y)[,c(1,2,4,6:9)]
+```
+
+
+Add a column to baseball with year in league
+========================================================
+
+```{r,cache=T}
+# adding th column for the pro years
+carl.y <- transform(carl.y,pro.year=year-min(year)+1)
+names(carl.y)
+```
+
+Use ddply to do it for each player (id)
+=============
+
+```{r,cache=T,tidy=T,fig.width=10}
+par(cex=1.5)
+# here we give ddply
+  # dataframe- baseball
+  # splitting criteria - id
+  # function - transform
+  # the extra arguments to function - transform taking in pro.year...
+baseball <- ddply(baseball,.(id),transform,pro.year=year-min(year)+1)
+# use vectors to plot
+plot(1:length(table(baseball$pro.year)),as.vector(table(baseball$pro.year)),xlab="year",ylab="n",type="b")
+```
+
+Plot shows that people come in to the league and then don't play for a year but then come back for 3rd year. Hence ups and drops in the data. This data maxes for year 11 because the dataset we are dealing with would be a subset of the whole data. So in this case, we only have people data for people who max stayed in the league for 11 years. 
+
+Get mean HR per AB (by pro year)
+=============
+First do it for two players
+
+```{r,cache=T}
+# take 2 players
+two.carls <- subset(baseball,(id=="yastrca01")|(id=="fiskca01"))
+```
+
+How do we estimate the mean of a ratio? Let's use maximum likelihood.
+
+-calculate the home run average for each player each year
+
+-then apply **ddply** to get the average of the ratios
+
+**OR**
+
+-calculate the total home run for each pro.year
+
+-calculate the total at bat for each pro.year
+
+-Take the ratio of those totals for each pro.year
+
+Calculate mean ratio
+=========
+```{r,cache=T,fig.width=10}
+par(cex=2)
+hr.per.ab.1 <- ddply(two.carls,.(pro.year),summarize,hr.rate=sum(hr)/sum(ab))
+plot(hr.per.ab.1,col="red")
+points(hr.per.ab.1,pch=16,col="blue")
+```
+
+Add n and se
+====
+```{r,cache=T}
+# n= length of the id
+# making a data frame with pro.year, home run rate and n
+hr.rate.sum <- ddply(two.carls,.(pro.year),summarize,hr.rate=sum(hr)/sum(ab),n=length(id))
+# adding the standard error
+# getting the standard error of each p hats
+hr.rate.sum <- transform(hr.rate.sum,se=sqrt(hr.rate*(1-hr.rate)/n))
+head(hr.rate.sum)
+```
+
+Do it for all the data
+====
+
+```{r,cache=T,tidy=T}
+# same for all data
+hr.rate.sum <- ddply(baseball,.(pro.year),summarize,hr.rate=sum(hr)/sum(ab),n=length(id))
+hr.rate.sum <- transform(hr.rate.sum,se=sqrt(hr.rate*(1-hr.rate)/n))
+head(hr.rate.sum)
+```
+
+
+Make CIs
+====
+
+```{r,cache=T,tidy=T}
+# now getting the CIs
+hr.rate.sum <- transform(hr.rate.sum,lower=hr.rate-qt(.975,df=n-1)*se,upper=hr.rate+qt(.975,df=n-1)*se)
+# replace NAN with 0
+hr.rate.sum[hr.rate.sum=="NaN"] <- 0
+head(hr.rate.sum)
+```
+
+Make a nice plot!
+=======
+```{r,cache=T,tidy=T,fig.width=12,eval=F}
+par(cex=2)
+ylim <- range(c(hr.rate.sum$lower,hr.rate.sum$upper))
+plot(hr.rate.sum$pro.year,hr.rate.sum$hr.rate,ylim=ylim,
+     xlab="pro year",ylab="HR rate (95% CI)",type="n",axes=F)
+lines(hr.rate.sum$pro.year,hr.rate.sum$hr.rate,lwd=2)
+lines(hr.rate.sum$pro.year,hr.rate.sum$upper,col="red",lwd=3)
+lines(hr.rate.sum$pro.year,hr.rate.sum$lower,col="red",lwd=3)
+axis(1)
+axis(2)
+```
+
+Depending on what you are look for. You can cut the plot off at the early part of the carrer of the player
+
+Make a nice plot! (not this one!)
+=======
+```{r,cache=T,tidy=T,fig.width=12,echo=F}
+par(cex=2)
+ylim <- range(c(0,hr.rate.sum$lower,hr.rate.sum$upper))
+plot(hr.rate.sum$pro.year,hr.rate.sum$hr.rate,ylim=ylim,
+     xlab="pro year",ylab="HR rate (95% CI)",type="n",axes=F)
+lines(hr.rate.sum$pro.year,hr.rate.sum$hr.rate,lwd=3)
+lines(hr.rate.sum$pro.year,hr.rate.sum$upper,col="red",lwd=3)
+lines(hr.rate.sum$pro.year,hr.rate.sum$lower,col="red",lwd=3)
+axis(1)
+axis(2)
+```
+
+Make a nicer plot!
+=======
+```{r,cache=T,tidy=T,fig.width=12,echo=F}
+par(cex=2)
+hr.rate.sum <- subset(hr.rate.sum,(pro.year<21))
+ylim <- range(c(0,hr.rate.sum$lower,hr.rate.sum$upper))
+plot(hr.rate.sum$pro.year,hr.rate.sum$hr.rate,ylim=ylim,
+     xlab="pro year",ylab="HR rate (95% CI)",type="n",axes=F)
+lines(hr.rate.sum$pro.year,hr.rate.sum$hr.rate,lwd=3)
+lines(hr.rate.sum$pro.year,hr.rate.sum$upper,col="red",lwd=3)
+lines(hr.rate.sum$pro.year,hr.rate.sum$lower,col="red",lwd=3)
+axis(1,at=c(1,5,10,15,20))
+axis(2)
+```
+
+

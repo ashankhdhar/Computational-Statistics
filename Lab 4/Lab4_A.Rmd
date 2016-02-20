@@ -1,0 +1,94 @@
+---
+title: 'Lab 4: Heart of the (Tiny) Tiger'
+author: "Ankita Shankhdhar"
+date: "9 October 2015"
+output: pdf_document
+---
+Part I
+==========
+1. Loading the data from the MASS package.
+```{r}
+library(MASS)
+data(cats)
+summary(cats)
+```
+
+The summary shows that the there were 47 female and 97 male cats whose weight and heart weights were collected. The minimum body weight out of all the cats was 2kg and the maximum was 3.9kg with an average body weight of 2.724kg. The minimum heart weight was 6.30g and the maximum was 30.50g with an average heart weight of 10.63g. There are other statistics present in the summary such as the first and third quartile as well as the median. 
+
+2. 
+```{r}
+hist(cats$Hwt, xlab="Heart Weight",col="purple",probability=TRUE)
+abline(v=mean(cats$Hwt))
+hist(cats$Bwt, xlab="Body Weight",col="blue",probability=TRUE)
+abline(v=mean(cats$Bwt))
+```
+
+3. Function ***param*** calculates the $a$ and $s$ 
+$$ a = \frac{a^2s^2}{as^2} = \frac{\mu^2}{\sigma^2} $$
+$$ s = \frac{as^2}{as} = \frac{\sigma^2}{\mu} $$
+and assuming that $\mu$ and  $\sigma$ come from a random sample from a gamma distribution.
+```{r}
+param <- function(mu,var){
+  a=(mu^2)/(var)
+  s=(var)/mu
+  return(c('a'=a,'s'=s))
+}
+```
+
+4.
+```{r}
+hmean <-mean(cats$Hwt)
+hsd <-sd(cats$Hwt)
+hvar <-var(cats$Hwt)
+cat("The a and s are:", param(hmean,hvar),"respectively.")
+```
+
+5. The function ***cat.stats()*** computes the mean, variance, a (shape) and s(scale) of the input vector of values
+
+```{r}
+cat.stats <- function(vec)
+{
+  m<-mean(vec)
+  var <- var(vec)
+  a<-(m^2)/var
+  s<-var/m
+  return(c("Mean"=m,"Variance"=var,"a"=a,"s"=s))
+}
+```
+
+Part II
+==========
+6.
+```{r}
+males<-which(cats$Sex=="M")
+cat("The body weight parameters for male cats are:",cat.stats(cats$Bwt[males]))
+cat("The heart weight paramters for male cats are:", cat.stats(cats$Hwt[males]))
+females<-which(cats$Sex=="F")
+cat("The body weight parameters for female cats are:",cat.stats(cats$Bwt[females]))
+cat("The heart weight paramters for female cats are:", cat.stats(cats$Hw[females]))
+```
+
+7. Females
+
+```{r}
+hist(cats$Bwt[females],main='Female Cats Body Weight',xlab='Body Weight',probability=TRUE)
+curve(dgamma(x,shape=cat.stats(cats$Bwt[females])[3],scale=cat.stats(cats$Bwt[females])[4]),add=TRUE)
+
+hist(cats$Hwt[females],main='Female Cats Heart Weight',xlab='Heart Weight',probability=TRUE)
+curve(dgamma(x,shape=cat.stats(cats$Hwt[females])[3],scale=cat.stats(cats$Hwt[females])[4]),add=TRUE)
+```
+
+The PDF of the Gamma Distribution distribution seems to be consistent with the empirical probability density of the histogram. However, if we sample more cats, we will get a histogram that looks more like the PDF.
+
+8. Males
+
+```{r}
+# the scales changes by letting porability=TRUE
+hist(cats$Bwt[males],main='Male Cats Body Weight',xlab='Body Weight',probability=TRUE)
+curve(dgamma(x,shape=cat.stats(cats$Bwt[males])[3],scale=cat.stats(cats$Bwt[males])[4]),add=TRUE)
+
+hist(cats$Hwt[males],main='Male Cats Heart Weight',xlab='Heart Weight',probability=TRUE)
+curve(dgamma(x,shape=cat.stats(cats$Hwt[males])[3],scale=cat.stats(cats$Hwt[males])[4]),add=TRUE)
+```
+
+We can say the same thing about the male cats as we did for female cats. Also, we can say that the distrubition is is skewed to the right which means that the right tail of the distribution is heavier. 

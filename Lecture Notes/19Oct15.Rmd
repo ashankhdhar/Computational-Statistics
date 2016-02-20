@@ -1,0 +1,168 @@
+Lecture11
+========================================================
+author: John S
+date: October 19, 2015
+
+The "apply family"" and timing code
+========================================================
+
+- Often things that can be done in a loop can often be done with an "apply type" function.
+- Sometimes this is faster.
+- It can be easier to program and read.
+
+Today
+=====
+- How to time code.
+- apply() versus a loop to compute functions across rows or columns
+- tapply(): apply a function to different splits of the data
+- split(): exisits too! 
+- Can do with a loop, but tapply() is easier.
+
+
+
+
+Timing a block of code
+========================================================
+
+```{r, tidy=T}
+t1 <- proc.time()
+  for (i in 1:1000000)
+    runif(10)
+t2 <- proc.time()
+t2-t1
+```
+
+In general, for loops are slow
+========================================================
+
+Have 1000000 numbers. How many are >= 0.8? Use a loop:
+```{r,tidy=T,cache=T}
+x <- rnorm(n=1e6)
+t1 <- proc.time()
+count <- 0
+for (i in 1:length(x)){if (x[i]>=0.8) count <- count+1}
+count
+proc.time()-t1
+```
+
+In general, loops are slow
+========================================================
+Solution 1: use a function that acts on a vector
+```{r,tidy=T,cache=T}
+t1 <- proc.time()
+sum((x>=0.8))
+  proc.time()-t1
+```
+
+apply()
+========
+x has 10000 rows, 1000 columns, want mean for each row.
+```{r,tidy=T,cache=T}
+# fills in the matrix sequentially
+x <- matrix(rexp(1000*10000),10000,1000)
+x[1:3,1:5]  
+```
+
+Try with a loop
+===
+```{r,tidy=T}
+t1 <- proc.time()
+sums <- rep(NA,dim(x)[1])
+for (i in 1:dim(x)[1])
+  sums[i] <- mean(x[i,])
+proc.time()-t1
+sums[1:5]
+```
+
+Try with a apply()
+===
+```{r,tidy=T}
+t1 <- proc.time()
+# 3 arguments to apply()
+  # the matrix you will apply it to (ex. x)
+  # this would be the length of rows of x (ex. 1 which is the first element of dim)
+    # could use 2 for length of columns of x
+  # the function you want to apply it to 
+  # if you add a ... after the function call, then it would remove NAs
+sums <- apply(x,1,mean)
+proc.time()-t1
+sums[1:5]
+```
+
+tapply()
+========
+Apply functions elments of a vector rows defined by unique values of another variable.
+```{r,tidy=T,cache=T}
+library(MASS)
+data(cats)
+head(cats)
+```
+
+tapply()
+========
+```{r,tidy=T}
+#  unique values of a factor and applies the function to it 
+tapply(cats$Bwt,cats$Sex,mean)
+```
+
+tapply(): two factors!
+========
+```{r,tidy=T,cache=T}
+data(Cars93)
+# the price of type of cars (rows) and origin (columns)
+# function, mean(), gets applied to the combinations of them
+tapply(Cars93$Price,list(Cars93$Type,Cars93$Origin),mean)
+# there is a NA entry here
+  # to remoe it syntax: tapply(Cars93$Price,list(Cars93$Type,Cars93$Origin),mean,...)
+```
+
+related: split()
+========
+```{r,tidy=T,cache=T}
+# does the first part of tapply (the splitting part)
+divided <- split(Cars93,list(Cars93$Type,Cars93$Origin))
+names(divided)
+```
+
+replated: split()
+=======
+```{r,tidy=T}
+# there is a - in here so we need ` ` in the middle otherwise R would think it needs to  subtract
+  divided$`Van.non-USA`[1:3,1:5]
+```
+We'll see more about split() later.
+
+Example: 
+========
+Long time series. Want sd of each 10 sequential measurements.
+
+```{r,tidy=T,cache=T}
+x <- rgamma(1e6,1,3)
+t1 <- proc.time()
+sds <- rep(NA,1e5)
+#gets the standard deviation for the first 10 and then look at the blocks for analysis
+for (i in 1:1e5)
+  sds[i] <- sd(x[(1+(i-1)*10):(i*10)])
+proc.time()-t1
+sds[1:3]
+```
+
+
+Try with tapply(): simpler, but not always faster...
+======
+```{r,tidy=T,cache=T}
+t1 <- proc.time()
+# using the rep function create something of length 1:1e5 and each is of length 10
+ex<-rep(1:1e5,each=10)
+sds <- tapply(x,ex,sd)
+proc.time()-t1
+sds[1:3]
+```
+
+Next: 
+==========
+- Have data from 18 countries.
+- Want to fit a separate model to each country's data.
+- Could loop. 
+- Other options: sapply(), by(), 
+- We will see both and time them.

@@ -1,0 +1,63 @@
+---
+title: 'Lab 10: Maximum Likelihood and Optimization'
+author: Ankita Shankhdhar
+date: November 20, 2015
+output: pdf_document
+---
+Loading the data
+===
+```{r}
+library(MASS)
+data(cats)
+summary(cats)
+```
+
+Question 1
+===
+Fitting a gamma distribution to the cats' heart weights by maximum likelihood. In this I wrote a functon for the negative log-likelihood, its gradient, and found the minimum using the optim() function. 
+
+```{r}
+# get the log likelihood
+ll.func <- function(theta){
+  return(-sum(dgamma(cats$Hwt,shape=theta[1],scale=theta[2],log=T)))
+}
+library(numDeriv) 
+# function that returns another function
+grad.ll <- function(theta) { 
+  grad(func=ll.func,x=theta) 
+} 
+theta0=c(20,0.5) 
+# finding the mimum
+fit <- optim(theta0,ll.func,grad.ll,method="BFGS",hessian=TRUE) 
+```
+
+Question 2
+===
+Here I verify that the gradient of the negative log-likelihood at the maximum likelihood estimate is close to 0. 
+```{r}
+output<-fit$par
+grad.ll(output)
+```
+
+Question 3
+===
+The negative inverse Hessian matrix of the log likelihood is an estimate of the covariance matrix of the estimated parameters. In order to find this for cast' heart weights, we just invert the Hessian matrix outputted by the optim() function. The reason we dont need to take the negative is becasue we optimize over the the negative log-likelihood. 
+```{r}
+hes <- fit$hessian
+fisher.info<-solve(hes)
+fisher.info
+```
+
+Question 4
+===
+In order to find the sample confidence intervals for the paramters in the gamma distrubtion, we use the covariance matrix that we found in question 3. From the covariance matrix we get the variances for each of the parameters. 
+
+```{r}
+sig<-sqrt(diag(fisher.info))
+upper1<-output[1]+1.96*sig[1]
+lower1<-output[1]-1.96*sig[1]
+cat('Confidence Interval for the shape [',lower1,',',upper1,']' )
+upper2<-output[2]+1.96*sig[2]
+lower2<-output[2]-1.96*sig[2]
+cat('Confidence Interval for the scale [',lower2,',',upper2,']' )
+```
